@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2020-03-17 11:13:18">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+<application_name>Nutanix Calm</application_name>
+<application_scope>x_nuta2_nutanix_ca</application_scope>
+<application_version>1.1.2</application_version>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description/>
+<inserted/>
+<name>Ntanix Calm V1.2_4 patch</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>084a45622f2300103aea808cf699b6db</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2020-03-17 11:13:18</sys_created_on>
+<sys_id>00c4d5e62f2300103aea808cf699b695</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2020-03-17 11:13:18</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_script_include_cc07c62137412300d27b8cf6c3990e83</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;x_nuta2_nutanix_ca.Nutanix_Calm_Utils&lt;/api_name&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;name&gt;Nutanix_Calm_Utils&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var Nutanix_Calm_Utils = Class.create();
+Nutanix_Calm_Utils.prototype = {
+	initialize: function() {
+		this.logger = new Nutanix_Calm_Logger();
+		/*
+		How to use alias in script
+		1. Add new alias in either of table,api,property
+		2. In respective script includes, instantiate Nutanix_Calm_Utils var apputil
+		3. Referance specific value as apputil.configuration.&lt;api/table/property&gt;.&lt;key-name&gt;
+ 		*/
+		this.version = gs.getProperty('x_nuta2_nutanix_ca.calm_version');
+		this.configuration = {
+			
+			"api" :{
+				"getProjectList": "/projects/list",
+				"getBlueprintList": "/blueprints/list",
+				"getBlueprintDetail": "/blueprints/",
+				"getAppList": "/apps/list",
+				"getAppDetail": "/apps/",
+				"getMarketplaceItemDetail" : "/calm_marketplace_items/",
+				"getCategories" : "/categories/AppFamily/list",
+				"getIcon" : "/static/app_icons/",
+				"getEnvironment" : "/environments/",
+				"getUsersList" : "/users/list",
+				"getRolesList" : "/roles/list",
+				"projectInternal" : "/projects_internal",
+				"directoryServices" : "/directory_services/list",
+				"getMarketplaceItem" : "/calm_marketplace_items/list",
+				"getGroupsList" : "/user_groups/list",
+				"proxyLogin" : "/proxy_login",
+				"getSubnets" : "/subnets/list"
+			},
+			"table":{
+				"NutanixStagingApplication": "x_nuta2_nutanix_ca_nutanix_staging_application",
+				"NutanixCalmAction": "x_nuta2_nutanix_ca_nutanix_calm_action",
+				"NutanixCalmApplication": "x_nuta2_nutanix_ca_nutanix_calm_application",
+				"ActionWorkflowStaging": "x_nuta2_nutanix_ca_app_action_workflow_trigger",
+				"AppDeployment": "x_nuta2_nutanix_ca_application_deployment",
+				"Blueprint": "x_nuta2_nutanix_ca_nutanix_blueprint",
+				"Project": "x_nuta2_nutanix_ca_nutanix_project",
+				"CalmPluginConfig": "x_nuta2_nutanix_ca_calm_plugin_configuration",
+				"stagingProject": "x_nuta2_nutanix_ca_nutanix_staging_project",
+				"stagingBlueprints": "x_nuta2_nutanix_ca_nutanix_staging_blueprints",
+				"processQueue": "x_nuta2_nutanix_ca_nutanix_process_queue",
+				"applicationProfiles": "x_nuta2_nutanix_ca_application_profile",
+				"varaiblesTable": "item_option_new",
+				"variableSetTable": "io_set_item",
+				"stagingMarketplaceItem" : "x_nuta2_nutanix_ca_nutanix_staging_marketplace_items",
+				"catalog": "sc_catalog",
+				"category" : "sc_category",
+				"sysUiAction" : "sys_ui_action",
+				"catalogProfileRelation": "x_nuta2_nutanix_ca_catalog_item_and_application_profile_relation",
+				"variablesProperties": "x_nuta2_nutanix_ca_catalog_variables_properties",
+				"catalogUserCriteria": "sc_cat_item_user_criteria_mtom",
+				"userCriteria": "user_criteria",
+				"catalogProjectRelation":"x_nuta2_nutanix_ca_nutanix_calm_projects_blueprints_relationship",
+				"Credentials": "x_nuta2_nutanix_ca_nutanix_calm_credential",
+				"appRunlogs": "x_nuta2_nutanix_ca_nutanix_calm_app_runlogs",
+				"stagingEnvironment" : "x_nuta2_nutanix_ca_nutanix_staging_environment",
+				"runtimeConfig": "x_nuta2_nutanix_ca_nutanix_runtime_configuration",
+				"catalogClientScript": "catalog_script_client",
+				"catalogUIPolicy": "catalog_ui_policy",
+				"catItem": "sc_cat_item",
+				"awsStorage" : "x_nuta2_nutanix_ca_nutanix_storage",
+				"awsTag" : "x_nuta2_nutanix_ca_nutanix_aws_tag_list",
+				"StagingGCP" : "x_nuta2_nutanix_ca_staging_gcp",
+				"blankDisks" : "x_nuta2_nutanix_ca_blank_disks",
+				"networking" : "x_nuta2_nutanix_ca_networking",
+				"disks"      : "x_nuta2_nutanix_ca_disks",
+				"stagingAzure" : "x_nuta2_nutanix_ca_staging_azure",
+				"security" : "x_nuta2_nutanix_ca_secret",
+				"nw_profiles" : "x_nuta2_nutanix_ca_network_profiles",
+				"dataDisk" : "x_nuta2_nutanix_ca_data_disk",
+				"subnet" : "x_nuta2_nutanix_ca_subnet",
+				"dropDownTable" : "x_nuta2_nutanix_ca_generic_table_for_dropdown",
+                "recoveryPoints" : "x_nuta2_nutanix_ca_restore_points",
+				"marketplaceItem": "x_nuta2_nutanix_ca_nutanix_marketplaceitems"
+			},
+		};
+	},
+	// Get credentials
+	
+	_getApiToken: function() {   //Orchestration api token call
+		try {
+			var credential_alias = "";
+			var calmInstanceURL = "";
+			var midApplication = "";
+			var retries = 0;
+		
+			var grConfig = new GlideRecord(this.configuration.table.CalmPluginConfig);
+			grConfig.get(gs.getProperty('x_nuta2_nutanix_ca.nutanix.application.properties.sys_id') + "");
+			grConfig.query();
+			if(grConfig.next()) {
+				credential_alias = grConfig.credential + "";
+				calmInstanceURL = grConfig.calm_instance + "";
+				midApplication = grConfig.mid_application + "";
+				//service_account_username = grConfig.username + "";
+			}
+			
+			while(retries &lt; 3) {
+		
+				var inputs = {};
+				inputs['endpoint'] = calmInstanceURL + gs.getProperty('x_nuta2_nutanix_ca.API_Prefix') + '/users/me';
+				inputs['midapplication'] = midApplication + "";
+				inputs['credentialalias'] = credential_alias + "";
+		
+				var outputs = sn_fd.FlowAPI.executeAction('x_nuta2_nutanix_ca.nutanix_refresh_token', inputs, 10000);
+		
+				var response = outputs['response'] + "";
+				var statuscode = outputs['statuscode'] + "";
+				var headers = outputs['headers'];
+				
+				if(statuscode == '200' || statuscode == '201') {
+					var parse_headers = JSON.parse(headers);
+					var cookie = parse_headers["Set-Cookie"][0];
+					gs.getSession().putClientData("nuta_session_cookie", cookie + "");
+					this.logger.info("Refreshing Nutanix session.");
+					return "200";
+				}
+				
+				retries++;
+			}
+			return "401";
+		} catch(err) {
+			this.logger.error("Failed getting token. Error: " + err);
+		}
+	},
+	
+	// Use this method to make Calm API client call to the Nutanix for JSON response
+	makeCalmApiCall: function(httpMethod, endpoint, body){                           //Original makeCalmApiCall
+		try {
+			var credential_status = "";
+			
+			var grConfig = new GlideRecord(this.configuration.table.CalmPluginConfig);
+			grConfig.addQuery('sys_id', gs.getProperty('x_nuta2_nutanix_ca.nutanix.application.properties.sys_id'));
+			grConfig.query();
+			if(grConfig.next()){
+				//this.Catalog = grConfig.service_catalog;
+				this.midServer = (grConfig.mid_server) ? grConfig.mid_server.getDisplayValue()+'' : "";
+				this.midApplicationServer = (grConfig.mid_application) ? grConfig.mid_application.default_mid_server.name + "" : "";
+				this.calmInstanceURL = grConfig.calm_instance+'';
+				this.userName = grConfig.calm_admin_username + "";
+				this.password = grConfig.calm_admin_password.getDecryptedValue() + "";
+			}
+			
+			var endpointURL = this.calmInstanceURL + gs.getProperty('x_nuta2_nutanix_ca.API_Prefix') + endpoint;
+			
+			var request = new sn_ws.RESTMessageV2();
+			request.setEccParameter('skip_sensor', true);
+			request.setRequestHeader("Accept","application/json");
+			request.setRequestHeader("Content-Type","application/json");
+			
+			if(gs.getProperty("x_nuta2_nutanix_ca.use_external_credential_system") + "" == "false") {
+				request.setBasicAuth(this.userName, this.password);
+				request.setMIDServer(this.midServer + '');
+			}
+			else {
+				request.setMIDServer(this.midApplicationServer + "");
+				if(gs.getSession().getClientData("nuta_session_cookie") + "" == "null") {
+					this._getApiToken();
+					request.setRequestHeader("Cookie", gs.getSession().getClientData("nuta_session_cookie") + "");
+				}
+				else {
+					var preset_cookie = gs.getSession().getClientData("nuta_session_cookie") + "";
+					request.setRequestHeader("Cookie", preset_cookie);
+				}
+			}
+			
+			request.setHttpMethod(httpMethod);
+			request.setEndpoint(endpointURL);
+			
+			if(body)
+				request.setRequestBody(body);
+			
+			request.disableForcedVariableSubstitution();
+			
+			//if(this.midServer.status =='Up' &amp;&amp; this.midServer.validated == 'true') {
+				
+			var response = request.execute();
+			
+			if(gs.getProperty("x_nuta2_nutanix_ca.use_external_credential_system") + "" == "true" &amp;&amp; response.getStatusCode() == "401") {
+				this.logger.info("Nutanix session has expired.");
+				credential_status = this._getApiToken();
+				if(credential_status != '401')
+					return this.makeCalmApiCall(httpMethod, endpoint, body);
+			}
+				//this.logger.debug(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Up ');
+			return response;
+			//} else {
+				//this.logger.error(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Down / Not Validated ');
+				//return false;
+			//}
+		} catch(err){
+			this.logger.error("Make Calm API Call [makeCalmApiCall] Error: " + err);
+		}
+	},
+	
+	//===========================API call to get CALM version=========================//
+	makeCalmApiVersionCall: function(httpMethod, endpoint, body){
+		try {
+			var grConfig = new GlideRecord(this.configuration.table.CalmPluginConfig);
+			grConfig.addQuery('sys_id', gs.getProperty('x_nuta2_nutanix_ca.nutanix.application.properties.sys_id'));
+			grConfig.query();
+			if(grConfig.next()){
+				//this.Catalog = grConfig.service_catalog;
+				if(gs.getProperty("x_nuta2_nutanix_ca.use_external_credential_system") + "" == "false")
+					this.midServer = grConfig.mid_server;
+				else
+					this.midServer = grConfig.mid_application.default_mid_server;
+					
+				this.calmInstanceURL = grConfig.calm_instance+'';
+			}
+			
+			var endpointURL = this.calmInstanceURL + endpoint;
+			
+			var request = new sn_ws.RESTMessageV2();
+			request.setEccParameter('skip_sensor', true);
+			request.setRequestHeader("Accept","text/html");
+			request.setHttpMethod(httpMethod);
+			request.setMIDServer(this.midServer.getDisplayValue()+'');
+			request.setEndpoint(endpointURL);
+			if(body)
+				request.setRequestBody(body);
+			
+			if(this.midServer.status =='Up' &amp;&amp; this.midServer.validated == 'true'){
+				var response = request.execute();
+				this.logger.debug(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Up ');
+				return response;
+			} else {
+				this.logger.error(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Down / Not Validated ');
+				return false;
+			}
+		} catch(err){
+			this.logger.error("Make Calm API Version Call [makeCalmApiVersionCall] Error: " + err);
+		}
+	},
+	//===========================End of API call to get CALM version==================//
+	
+	makeProxyCall: function(httpMethod, endpoint, body, userId) {                //API Proxy Call
+		try {
+			var userGr = new GlideRecord('sys_user');
+			userGr.get(userId);
+			var proxyURL = this.configuration.api.proxyLogin + '';
+			var calmUserName = userGr.email + '';
+			calmUserName = calmUserName.toLowerCase() + '';
+			var proxyBody = {"proxy_for_username":calmUserName};
+			var proxyResponse = this.makeCalmApiCall('POST', proxyURL, this.stringify(proxyBody));
+				
+			if(proxyResponse.getStatusCode() == '200' || proxyResponse.getStatusCode() == '201') {
+				var parsedProxyResp = this.parse(proxyResponse.getBody());
+				var sessionId = parsedProxyResp.ntnx_igw_session + '';
+				var idExpiresIn = parsedProxyResp.expires + '';
+				var grConfig = new GlideRecord(this.configuration.table.CalmPluginConfig);
+				grConfig.addQuery('sys_id', gs.getProperty('x_nuta2_nutanix_ca.nutanix.application.properties.sys_id'));
+				grConfig.query();
+				if(grConfig.next()) {
+					this.midServer = (grConfig.mid_server) ? grConfig.mid_server : grConfig.mid_application.default_mid_server;
+					this.calmInstanceURL = grConfig.calm_instance+'';
+				}
+			
+				var domain = this.calmInstanceURL.replace('https://','').replace(':9440','');
+				var cookie = 'NTNX_IGW_SESSION='+sessionId+'; path=/; domain='+domain+'; Secure; HttpOnly; Expires='+this.proxyUTCConverter(idExpiresIn)+';';
+				var endpointURL = this.calmInstanceURL + gs.getProperty('x_nuta2_nutanix_ca.API_Prefix') + endpoint;
+				
+				var proxyRequest = new sn_ws.RESTMessageV2();
+				proxyRequest.setEccParameter('skip_sensor', true);
+				proxyRequest.setRequestHeader("Accept","application/json");
+				proxyRequest.setRequestHeader("Content-Type","application/json");
+				proxyRequest.setRequestHeader("Cookie", cookie);
+				proxyRequest.setHttpMethod(httpMethod);
+				proxyRequest.setMIDServer(this.midServer.getDisplayValue()+'');
+				proxyRequest.setEndpoint(endpointURL);
+				if(body)
+					proxyRequest.setRequestBody(body);
+				
+				proxyRequest.disableForcedVariableSubstitution();
+				
+				if(this.midServer.status =='Up' &amp;&amp; this.midServer.validated == 'true') {
+					proxyResponse = proxyRequest.execute();
+					this.logger.debug(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Up ');
+					return proxyResponse;
+				} else {
+					this.logger.error(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Down / Not Validated ');
+					return false;
+				}
+				
+			} else {
+				this.logger.error("Error in makeProxyCall API Call [makeProxyCall] Error: " +proxyResponse.getBody());
+			}
+		} catch(err) {
+			this.logger.error("Make Proxy API Call [makeProxyCall] Error: " + err);
+		}	
+	},
+	
+	makeIntermediateApiCall :function(httpMethod, endpoint, body, userId) {                //API intermediate Proxy Call
+		
+		var local_groups_flag = "";
+		var grConfig = new GlideRecord(this.configuration.table.CalmPluginConfig);
+		grConfig.addQuery('sys_id', gs.getProperty('x_nuta2_nutanix_ca.nutanix.application.properties.sys_id'));
+		grConfig.query();
+		if(grConfig.next()){
+			local_groups_flag = grConfig.use_local_groups + "";
+		}
+		
+		if(this.version &lt; 2.7 || local_groups_flag == "true") {
+			return this.makeCalmApiCall(httpMethod, endpoint, body);
+		}
+		else {
+			
+			var grUser = new GlideRecord('sys_user_has_role');
+			grUser.addEncodedQuery('role.name=x_nuta2_nutanix_ca.calm_admin^ORrole.name=admin^user='+userId);
+						
+			grUser.query();
+			
+			if(grUser.next())//user_name.hasRole("x_nuta2_nutanix_ca.calm_admin")) 
+			{
+				return this.makeCalmApiCall(httpMethod, endpoint, body);
+			}
+			else {
+				return this.makeProxyCall(httpMethod, endpoint, body, userId);
+			}
+		}
+	},
+	
+	makeCalmApiCallForIcon :function(httpMethod, endpoint, body , sysId){
+		try {
+			var grConfig = new GlideRecord(this.configuration.table.CalmPluginConfig);
+			grConfig.addQuery('sys_id', gs.getProperty('x_nuta2_nutanix_ca.nutanix.application.properties.sys_id'));
+			grConfig.query();
+			if(grConfig.next()){
+				//this.Catalog = grConfig.service_catalog;
+				this.midServer = grConfig.mid_server;
+				this.calmInstanceURL = grConfig.calm_instance+'';
+				this.userName = grConfig.calm_admin_username+'';
+				this.password = grConfig.calm_admin_password.getDecryptedValue()+'';
+			}
+			
+			var endpointURL = this.calmInstanceURL + gs.getProperty('x_nuta2_nutanix_ca.API_Prefix') + endpoint;
+			var tablename   = 'sc_cat_item';
+			var recordSysId =  sysId;
+			var filename    = 'picture';
+			var request = new sn_ws.RESTMessageV2();
+			request.setEccParameter('skip_sensor', true); 
+			request.setBasicAuth(this.userName, this.password);
+			request.setHttpMethod(httpMethod);
+			request.setMIDServer(this.midServer.getDisplayValue()+'');
+			request.setEndpoint(endpointURL);
+			request.saveResponseBodyAsAttachment(tablename, recordSysId, filename);
+			if(body)
+				request.setRequestBody(body);
+			
+			request.disableForcedVariableSubstitution();
+			
+			if(this.midServer.status =='Up' &amp;&amp; this.midServer.validated == 'true'){
+				var response = request.execute();
+				this.logger.debug(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Up ');
+				return response;
+			} else {
+				this.logger.error(' MID Server '+this.midServer.getDisplayValue()+''+ ' is Down / Not Validated ');
+				return false;
+			}
+		} catch(err){
+			this.logger.error("Make API Call [makeCalmApiCallForIcon] Error: " + err);
+		}
+	},
+	
+	///changes
+	
+	generateRequestBody : function(name,version,presetOffset,pageBreaker){
+
+		if(version &lt; 2.7){
+			var responseBody = "";
+			switch (name) {
+
+			case "startImportMPI" : responseBody = {
+										"kind": "marketplace_item",
+										"offset": 0,
+										"length": 1
+									};
+									return responseBody;
+
+			case "importMPIData"  : responseBody = {
+										"kind": "marketplace_item",
+										"offset": presetOffset,
+										"length": pageBreaker
+									};
+									return responseBody;
+
+			default : 				this.logger.error("Inside Nutanix_Calm_Utils.generateRequestBody :: " +name +" not found");
+			}
+		}else{
+			var responseBody = "";
+			switch (name) {
+		
+				case "startImportMPI" : responseBody = {
+											"kind": "marketplace_item",
+											"offset": 0,
+											"filter" : "app_state==PUBLISHED",
+											"length": 1
+										};
+										return responseBody;
+
+				case "importMPIData"  : responseBody = {
+											"kind": "marketplace_item",
+											"offset": presetOffset,
+											"filter" : "app_state==PUBLISHED",
+											"length": pageBreaker
+										};
+										return responseBody;
+
+				default : 				this.logger.error("Inside Nutanix_Calm_Utils.generateRequestBody :: " +name +" not found");
+
+			}
+		}
+	},
+	
+	///
+	//Show/Hide 'Sync' ui action on authentication success or failure
+	showHideSyncUiAction: function(SyncStatus){
+		try {
+			var grAction = new GlideRecord(this.configuration.table.sysUiAction);
+			grAction.addQuery('action_name','nutanix_sync');
+			grAction.query();
+			if(grAction.next()){
+				grAction.form_button = SyncStatus;
+				grAction.update();
+			}
+		} catch(e){
+			this.logger.error("Inside Nutanix_Calm_Utils.showHideSyncUiAction Error: " + e);
+		}
+		
+	},
+	
+	//Show/Hide 'Save Properties' ui action on MID Server Down/not validated
+	showHideSaveUiAction: function(SaveStatus){
+		try {
+			var grAction = new GlideRecord(this.configuration.table.sysUiAction);
+			grAction.addQuery('action_name','save_properties');
+			grAction.query();
+			if(grAction.next()){
+				grAction.form_button = SaveStatus;
+				grAction.update();
+			}
+		} catch(e){
+			this.logger.error("Inside Nutanix_Calm_Utils.showHideSaveUiAction Error: " + e);
+		}
+		
+	},
+	
+	
+	updateCatalogName: function(name){
+		var gr = new GlideRecord(this.configuration.table.catalog);
+		gr.addQuery('sys_id', gs.getProperty('x_nuta2_nutanix_ca.nutanix_catalog_sysId')+'' );
+		gr.query();
+		if(gr.next()){
+			gr.title = name+'';
+			gr.update();
+		}else{
+			gr.initialize();
+			gr.title = name;
+			//gr.desktop_image = '';   //Image needed to be added.
+			gr.insert();
+		}
+	},
+	
+	//('importApplications', 'POST', '/apps/list', 'payload');
+	insertIntoQueue: function(topic, method, parameter, payload, process, desc){
+		var gr = new GlideRecord(this.configuration.table.processQueue);
+		gr.initialize();
+		gr.topic = topic+'';
+		gr.method = method+'';
+		gr.parameter = parameter+'';
+		gr.payload = payload+'';
+		gr.process_name = process+'';
+		gr.description = desc+'';
+		gr.state = "ready";
+		gr.insert();
+	},
+	
+	// Inserts app run logs into App Runlogs table
+	insertAppRunlogs: function(parsedJson){
+		try{
+			var grRunlogs = new GlideRecord(this.configuration.table.appRunlogs);
+			grRunlogs.initialize();
+			
+			//grRunlogs.name = parsedJson.status.action_reference.name;
+			var action_name_vars = ['action_install_ngt','action_manage_ngt','action_uninstall_ngt','action_update'];
+			var action_name = parsedJson.status.action_reference.name + '';
+			if(action_name_vars.indexOf(action_name) != -1) {
+				var action_name_json = {'action_install_ngt':'Install NGT',
+										'action_manage_ngt':'Manage NGT',
+										'action_uninstall_ngt':'Uninstall NGT',
+										'action_update' : 'App Edit'};
+				action_name = action_name_json[action_name];
+			}
+			else {
+				var aname = action_name.replace('action_','').replace('_',' ');
+				aname = aname.split(" ");
+				for (var j = 0, x = aname.length; j &lt; x; j++) {
+					aname[j] = aname[j][0].toUpperCase() + aname[j].substr(1);
+				}
+				action_name = aname.join(" ");
+			}
+			grRunlogs.name = action_name + '';
+			
+			grRunlogs.uuid = parsedJson.metadata.uuid;
+			grRunlogs.description = parsedJson.status.description;
+			grRunlogs.app_uuid = parsedJson.status.application_reference.uuid;
+			grRunlogs.app_name = parsedJson.status.application_reference.name;
+			grRunlogs.is_runlog_archived = parsedJson.status.is_runlog_archived;
+			grRunlogs.is_critical = parsedJson.status.is_critical;
+			grRunlogs.state = parsedJson.status.state;
+			grRunlogs.type = parsedJson.status.type;
+			grRunlogs.kind = parsedJson.metadata.kind;
+			grRunlogs.last_update_time = this.calmDateConvertor(parsedJson.metadata.last_update_time);
+			grRunlogs.creation_time = this.calmDateConvertor(parsedJson.metadata.creation_time);
+			grRunlogs.insert();
+			
+		} catch(e) {
+			this.logger.error("Error occured while inserting app run logs, Nutanix_Calm_Utils.insertAppRunlogs: "+e);
+		}
+	},
+	
+	// Calm "last_update_time", "creation_time" date convertor specific to SNOW datetime format
+	calmDateConvertor: function(getdate){
+		try{
+			var date = new Date(getdate/1000);
+			var year = date.getUTCFullYear();
+			var month = date.getUTCMonth()+1; // getMonth() is zero-indexed, so we'll increment to get the correct month number
+			var day = date.getUTCDate();
+			var hours = date.getUTCHours();
+			var minutes = date.getUTCMinutes();
+			var seconds = date.getUTCSeconds();
+			var lastUpdate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes+ ':' +seconds;
+			return lastUpdate;
+		} catch(e) {
+			this.logger.error("Error occured inside Nutanix_Calm_Utils.calmDateConvertor: "+e);
+		}
+	},
+	
+	parse: function(str){
+		if(str)
+			return JSON.parse(str);
+		
+		return '';
+	},
+	
+	stringify: function(str){
+		if(str)
+			return JSON.stringify(str);
+		
+		return '';
+	},
+	
+	proxyUTCConverter: function(timeStamp) {
+		var d = new Date(timeStamp*1000);
+		return d.toGMTString();
+	},
+	
+	markdown_renderer: function(markdown_string) {
+		try {
+			
+			if(markdown_string == '')
+				return '';
+				
+			x_nuta2_nutanix_ca.Markdown_lib;
+			var converter = new showdown.Converter();
+			var html_string = converter.makeHtml(markdown_string);
+			var markdown_desc = (html_string+'').replace(/(&lt;h[1-9])/g, '&lt;strong').replace(/(&lt;\/h[1-9]&gt;)/g, '&lt;/strong&gt;').replace(/&lt;ul&gt;/g, '&lt;ul style="list-style-position: inside;"&gt;');
+			
+			return markdown_desc;
+		} catch(e) {
+			this.logger.error(e);
+		}
+	},
+		
+	type: 'Nutanix_Calm_Utils'
+};]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;mumtaz.ansari&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-10-09 13:20:11&lt;/sys_created_on&gt;&lt;sys_id&gt;cc07c62137412300d27b8cf6c3990e83&lt;/sys_id&gt;&lt;sys_mod_count&gt;175&lt;/sys_mod_count&gt;&lt;sys_name&gt;Nutanix_Calm_Utils&lt;/sys_name&gt;&lt;sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;read&lt;/sys_policy&gt;&lt;sys_scope display_value="Nutanix Calm"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_cc07c62137412300d27b8cf6c3990e83&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2020-03-17 11:06:17&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1018307385</payload_hash>
+<remote_update_set display_value="Ntanix Calm V1.2_4 patch">00c4d5e62f2300103aea808cf699b695</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2020-03-17 11:13:18</sys_created_on>
+<sys_id>84c4d5e62f2300103aea808cf699b695</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>170e82c39300000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2020-03-17 11:13:18</sys_updated_on>
+<table/>
+<target_name>Nutanix_Calm_Utils</target_name>
+<type>Script Include</type>
+<update_domain>global</update_domain>
+<update_guid>852311e6e2230010745fac29bfba6d75</update_guid>
+<update_guid_history>852311e6e2230010745fac29bfba6d75:1018307385,6081fb01ded34010e3fc2b3f1c8d3ac9:681981532,31e0ff4105d34010ccc3f135f620b248:16326279,24ef234193d340106aff90c439e2e0e9:-1988975767,27cfaf012ad340107a0c037c1e1b3f1a:-1528290642,e54fa78d3e934010cf980a60a5a432ff:-1261945501,0b7d2f4daf9340100679e7a4d7f62205:108306278,fadca78d55934010f8f5145b83a714fa:-1722235142,363ceb4dbe934010e3ad284585ebbafe:1730098361,ef4967890a93401099a2d34620d270bc:6821147,3ddfd64d71db0010122d2bf85192c8c1:-185829358,e1de9e0d26db00108957f9579c60326c:-101961738,10bf8e4da39b0010e908e837057801e3:154883992,50a9d4385fd3001045f360f74dc4020a:1372376674,a7d814f491d300104b0899e0e507aaa5:805872783,fbbb3360ed5f0410688e9d2e798e78d5:2063878629,f54cebda5d4fc010b8505077f002b494:-1354894918,e276d419e3c70010a0df446941e8e443:-1214763492,f6e7c88a2c7e4010868929a9593f346d:-37487785,5a1db85ae16000106ebce4d45ef5fe78:-468448675,d564843aadbbf3007a09a34adcf81312:2134306854,2ebc7fee6d3bf300f6047d8b9c4c2949:-463460632,2397eb6948b333001f5e9b426982e8db:-1430333070,9b9b87d1b077330020578a6fe81eceb9:404727060,be52f4c95f2b3300175a1fa3c5cd42a1:-1241190103,28b5c2b00e63330004a1081af9a80ae5:-1014061663,c906858573df330050af5efb86a6464f:1416748225,6dea86f75172330010ef5f8bdfa564bb:195597801,6d1bb84c35b2330004e67592b96aab81:2101651716,4dcafc4c50b23300beed94d3d4e67ae9:-1274462870,789ab44c12b233005466861233c15aa5:-1097618369,5be9344c0db2330091e3f5ff46a55667:-1861443188,4659fc0cf5b23300e198857bcdddf091:1441827055,bbe5879ae3a2330038043fee8bec790c:1967914857,8c85ba1ebe623300f603b202b20e4824:-1245825130,ebe0365e87623300913d753ed7d89702:344087215,e298a6db2acff3004c51d146d6331c19:-352558727,da6a86b3a6723300395edec4c356b718:601796858,e9c463b511b233008dcab6efdd042a05:1396697269,73709df76d7633006d6c9f987ad87b00:240563474,19690d73bc763300c270f630fe3c62a4:1062521728,1f35f887258233000aa19fe78028382b:1388854173,ea253cc71d82330023ba1a8cc933652c:327979110,02e4f44762823300e09356ead0fa5b48:-1811692405,dfb370c736823300e983ef303f01b514:1388854173,54b3b88767823300aba696f0ad315d42:-273468163,67833447c8823300897b2db4f67aaa99:-682300393,eb065d009f0e3300fa77911fa5c1599d:1388854173,7283d104120a33009647acb2516f24f8:-1520857,8f9800097d1f3300bf88a72f79e2bceb:1990703629,74c9e6270c893300fe19e1421a433a34:344087215,2b99eee3c48933000713f06a20c9a609:445303032,5978a6a3fe89330096387f43539eae04:1542210748,adf722a3838933008f241867543b31cd:320182338,b41766a36d893300e3e2fbc39b268382:245319624,17c5a66326893300578b9b715e31256a:2128763330,e86566ef6a4933006f22e2b300d58bae:1141746189,c615e623c889330066507d26488846c2:-888239665,b3f46a23d68933000353fce10a876dca:999585783,93d46a23aa893300ae8c3095c71b0adf:-156386778,495b9e674a4933004ed85a7b14019c65:-1075560250,268ade67f7493300813cf1768cd324ab:1468239795,ba5112af16093300dbecd05e833c5b61:2025756305,3a0f822fac0933004b135db2b3060e04:1525564970,1ced82eb87093300cbc203fcdf827bcc:-1595414578,f30cc26b4a0933004f07d83343fa1a3e:-1841920116,fb954667ab093300d3228e896106645f:139672442,89714263d10933002764995614ee778a:-2047818780,783947d7ccb073009f7b9a289d845243:1664189231,5f2ce15b78bc330019c1251dbce2db99:1344231297,8c8c626e5f7833005f146d29009880b8:2048893628,67cbf8783430b300e0cf6eb80848396e:-183637656,d92aa4bc39fc7300ddf50098b1044c46:756771976,79201cf083bc73006e6188847af07bab:683982105,ab890ce464b0730075b92922ba008d3b:1890913806,e87980e48db0730055d55c279ef362d2:-2055294049,240580ece1707300239bbdc475446560:-1897943010,12c783458438330042985007636a30b3:1890913806,e7da35386ef0f30045d878d6d2467b7e:-1322583702,048c3944163033007ce5954103de6f3a:-1281797981,ede97d00cb30330037db91f69e20a6d2:1554116198,af1695f7f0a03300d9aa26f55bbe36be:1960442693,63a91973e9e033008ca1ca8c349b9fd0:827788452,49296a23085033004c28815ffecaa6b6:-44464157,74c8a62380503300fbf7a8741f16ac35:-837492737,9d70e34bf76c33008cf942a5df7b8de9:1669009267,87d69b83a06c330042b12e79012e8ebf:1983010569,67c657c30a6c3300feba6e17aa99f4f1:-2063810673,52e1e28b4da83300414d69d7b5da69c2:-843339734,5ca42676536033006e1450d3c431cf38:-1379735095,972ef5fed3c033002f04b7fd660f11d6:916214372,2bad4a53c52e6300949200b0b467c7e0:1289926590,67eae517c7aa63008d5f4aabbfb0f8a2:-1564236883,358d0ecb49a26300d3aa690585619951:1065150832,de140e4731a26300acbb850ae0d66447:-504486437,cd0e4c03b0ae23003a38fa08f0800ebd:-2112665817,3c91b07a5ca62300c60ae243592de180:1885335981,b7a077261c2623009110b85c0d7e57f6:240199054,f6b0ebd00ce223002b72eb45598e3833:-587797936,2d4cd39cf8a22300f2f5de9d038ba596:1159552271,84535b90fb2663008e74faa51946d5c0:817947824,75916acc3a66230082d51178c6f97c03:1483891257,99fd6d003fe22300bafbde99866909ef:-484971044,4b3a6d005ce2230035ed8ec2cf47b0c4:-1052171364,18a78d8c262223003ffa7e78914b8197:-484971044,2b9926ff058223002c8bb8125f154ca5:796385693,211b5277db822300a3ee96183503e821:472942619,8f999af3028223003a4046a92220fb02:-503582359,b29ac6776b422300d71ace5fbd006d53:31732372,d0623de3230623002733c8bd4a177f8e:-372205656,c2a1495bd782a30086b29ba9c9cc7c4f:1912644188,e95cb8938082a300ab069bc1400f4dda:1985826361,a3e39c1bed02a300c11af68991e3ae4f:167991996,b2301817a502a3005838bf32b8a758b1:-990520716,637761a1628a2300ff8d0078b953da1c:1688517324,a8e2e0ad1f06230089145ac71a53bed7:-1776621505,d8976159ecc223004ad254ff2c79c981:-1842019564,ed8970d1f8422300321da662a2b968ce:-97848339,29dcfcc967066b009a3858610083f71e:-1042701577,b24f680110066b00185c500e1a19d4de:1951309313,60f5ec494cc26b00556b49d1edbb536d:1891592437,f5309950408e2300740ce55e25eef619:-2060227712,f63ec110f38e2300adafa9339b24e002:810742891,7ead89dc254e230068662e8043188a9c:1136719629,d6da815cfd4e23004ea3f265eddf7a2b:-776447500,c5e349d0924e2300b2f2673f7e59316d:-549523885,f82d0e8c56862300f9d646448cd53a9a:866126304,301d5283e87523003448ccb4b988e599:-666693685,afeb1e434d75230008806ce877096361:253922448,07c3864f1ef123004c8f82c95e4d1b3e:-607216006,b83382cb24f123001a04ed3380b83fa6:1939680493,106ab9c7bef1230009502141c93898a8:-1666048103,3dcee98fcab12300c5aed6fc3061b722:-58668486,937e218f1eb12300e623e9d74ce493a8:-607216006,86bc61cb06b12300a1d6ce1dbf58c88b:-569454194,d0a91e07f0b9a3005b4269817e7e18f9:-1104963394,d0b6e1c362f5a300466dd1b345efe6da:992225794,45f4a1039cf5a300fefa76ecc6920ca0:-1136790922,5bad9dcb82b5a30025783ef4baa2348f:873845548,677a7faec039630023d03a479bc97558:1438022542,3e6a7fae4c3963006bc70b2aeed3b951:1302355598,737f12da12f9230017cfd0f7cf2cec38:1438022542,fd0431f11f75e300819956b957d0c1d8:-1614843276,8f88c57519f1e30032cd16d5f949c3fe:-1708585935,97b749fd57fd2300e0fd7c565308b068:862696279,92974d715c3163001543d85471f42df9:-379608796,2e77cd71b43163002a19ecb73e54efde:854484825,b47ef7edc13d23005468f7f185ed4d9c:-1587995975,e51ef3edea3d230043db7e7fce3b797a:1161824316,a77dff6d2a3d2300a740b15b7e288747:-606199214,7a2c732dd73d2300b24c984b837ff56c:-1025347161,1adffb156ef1230075f7e851ee4ae3c6:1241088169,5fa5bc6dfff5a30086193c6125c8e866:-754602674,6018a8d5836d2300d957e536e5a08c64:1786128469,002f110187652300c3ccf79fd27c3ddc:244504230,bce4a48501e1230012691220b880aa0c:-676849501,e7464ae801212300ae40b489254314bb:-77708988,32406d14722963008c76d6a26c36ad92:-1015307147,117bb543eed12300947a461f60646cb0:-1801119527,4216fd4fd79123007b8c6f028117403f:-1093476056,60a4cdcf62112300552423ab2aecb411:376767278,4de530ba45912300a90b840b65fac61d:381494677,e1424b56a75123000bdde251181f97ef:1741981683,9cd8f054a42d23000bb4ac24e1c1baf7:1731031146,3e98f410242d2300b5cc05fdaac488e1:-1100326519,3952a5fa6e952300560b977d79c58e0b:1727849333,2d3ed03233152300ee301914f1975060:1093139738,69182b5efb9d230049dd02f69eeb675a:820698938,23d72b5e509d2300d8e45d9218844f40:-498397573,3f77eb1ec29d23007dac6230dabe50fb:1746460774,4a342f5ab99d2300789741e24ee9f4fc:1570937844,f15f1f56b19d23000c863cb1d50c1697:1878383819,13447ed6741d230090969f346b3610fb:583572587,f77e3fe61ad12300d526fe1ddd30df69:1783218942,59e4875264152300a67a293efd0bddbe:-85140564,3e6b6612eed123003af199fb13803785:-2052516138,32ac688eb61d2300fa8c57c23fcedd3f:1586355424,c86ca08e4f1d2300c50fdf92f108640d:-1564394133,86abe80e431d2300279dba1e95e70ddd:-1770319341,4a9a600e501d23000540f6502e3c43e9:-641103501,c9e9280ece1d230021e93ead6f92b6e1:-182189005,1e49acca5c1d23009febb302fc45abd6:-1199287213,503920ca7a1d2300f26521753167f4d7:-1384747517,2cb86c4a701d23007ac317fe2d05536b:-1036576009,83956c4ad41d2300a0627e1b1cb1f763:895067125,8705e80a351d230090244b7565da2d22:-1517002870,2d179f2547112300083bdec5aed8d716:619773215,ec868cf97c512300e4a968dbc749d045:339057694,46ddb938c4d12300fa0005d8527a01eb:-530584369,697cfdb453d1230053fe2423b1efbe8f:617939878,cee8f4b0e4dd23009e7d64cf60c3dca0:-754938354,4e073cfcf29d2300bf5149956108dac3:1186470154,a1a534fc1a9d2300add3f80cafd222f8:1368592038,7b6534fc259d2300fca491e5e0a25a6d:-1971579545,d663b87cb59d2300846ef2c70e22c27a:-663801934,0643f83c099d230071278aa97e645704:-173218921,7933b0b86d9d2300811dca0446bfb299:-267801899,691ee0783b9d230079028fdaccad2598:735034123,f46554786d5d230070d150bd261ef15e:1929433413,fe4358349f5d2300edc8abf7812e377d:-593066623,8c015434ea5d230092b3900f6bf0e241:-1163449663,86fd0830d75d23001d12b554d2ac2558:-1751284441,69757b60bc1d2300000eca5130f5d7c5:-1772029879,af29be58771123002e6424df3a6bba11:-316090238,41c33ed0901123006cceabb949f4c600:831224956,d6a6917795cd23005f104d772b853f86:268008152,4c5070771e4d2300ce01a17ffe33909c:151205789,dcd2a227c0c5a300193c273ededccea7:40333851,9ef0e2e326c5a300d472157d00e4ce1e:56452773,1f3f1e638bc5a3009eea9ea80ea96eff:-1893247731,25ac11a7e88523007642c4635d2b6001:-915065046,1b7cdd67c38523001d0a29181f8122de:1001649820,664cd967e5852300e24ba755b2e62f31:-1378107027,4dbb196799852300f425cd24d3bf51a7:1129056810,1f5bd16724852300ce3f1e4494124ad9:-683076092,04fa1d2714852300d936f10dae5456eb:301120033,714755a3ce852300b25327aa96e76d1b:810830716,5cd9c9a74f452300c4904d9f7cf0c98b:-683076092,e4c398a3f1c12300d81b41b84f862e49:1234535235,a95354a3d8c12300df0b56605532303e:1739961597,1652146300c1230040aa7ffcbbee26b2:-510357201,15e114639dc12300fe6a692e482357ad:-1593936654,4321d4efa78123008eff1be4b522d199:-151142886,58de44afaa8123006894176fbc006807:1039072466,d6a970efbc052300159fbad5d7aadee9:382554143,74897c6fa8052300d5c8bdb0279a5659:-2095677452,2569bcaf9e0523003137d910f11458e6:593806146,35d7fc2fad0523003985f6bcc680d7ba:-1921525184,6797346fb00523006adbc1637fc9a408:-1554795412,2537fc2faf05230049da6bf3c1a543b5:-754857388,8be634abcb0523002962446fea483e73:-617809692,2a56b0ab9e0523008e8d4ba31010995c:718925376,7eaba8e3c4052300d238013ffb647002:1003504369,02b23f9ffb412300f840e6c9a2eaae15:1471106428,0092fb9f704123002c128187d875e2e8:1312140642,78a0bf5fa9412300bbd493677413a326:-383440449,3b7eeb1ff0412300e9a4798c23f70661:-648995161,fa3ea75b8d412300edd20469b7ccbf1b:51835091,6bac635b50412300bdadf0aec5163f6a:1091477255,735f73930041a300f6f8bb46ff326fa3:249568305,568f201b3c49630074a0e400c0aa7fc0:-1931523059,83cf07cf33456300855103455ae8ded5:-2070930081,84bf8b4ffb056300fe7d0617901a628b:1842252555,fd3fcf8f83456300dcbcc8f160d7967b:911212182,a07545eae545e3004f0fed9a9bacec69:194890797,91f9f4e24e45e30013307843f71ca846:1772564359,11da6c2a5505e300ce82207ed852c857:1395583904,d27204ee3181e300acf5ec2d18f22301:1213373881,22af7bcec4c12300934e9e143c07bca8:1584108704,2cccc7b54bc12300bb1bb95e051751ff:-518467077,9eadb63969812300396736d5128f2c0d:2141133413,d4bcdfb13b4523009eb7a6ada0a68c1b:1323389742,91e3573d56052300eb43dab606537f0d:-2009685848,b053fab509c1230055576b7cd0d4b7fc:-850130911,13777239d38123005cd8a3aed83bb194:-531617724,7617b2f57f812300e7c8affd884b042c:759044228,5a93b275e4812300127d43fbf82ade3f:-2106764558,f2423eb1f5812300d97042cf31edb4f2:-839528526,677136710c812300c22744101ea8ae21:553052209,38cf2ab1a2812300d574fe40923f8a08:849427136,c74c62710b81230009dd5f4cafb18280:1582422541,ed25ae39d54123006c9b4e7c5da69c93:1810348366,1daf9e39784123003efc709984d6098d:2125162294,5f6fdef542412300dab2737dd8f7b3a3:1149931353,e71fda39604123004c31f089c66cf260:-797722392,a2fd96f5ed412300e059b6bd5776f2ad:-1410515181,89cf3571eb012300ecdabb5481ce084a:-1455467242,35b121f9ed092300b98578bf102bcbcf:-2132334686,f3178e21e94123004c8a087ac0e02461:-393435071</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
