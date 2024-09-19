@@ -9,3 +9,6 @@ Release Notes: https://portal.nutanix.com/page/documents/details?targetId=Releas
 Navigation for documentation: Go into Software Documentation > Third-Party Integrations > Self-Service (formerly Calm). Select the appropriate version.
 
 Please note that there was no version v1.7.0. We directly jumped to v1.7.1
+
+Please note that "Fix Null Check.xml" is a patch fix for the null key issue. This issue causes the Catalog Lauch to fail.
+
