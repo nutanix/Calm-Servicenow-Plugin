@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2024-09-19 08:01:30">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<application_name>NCM Self-Service</application_name>
+<application_scope>x_nuta2_nutanix_ca</application_scope>
+<application_version>1.7.5</application_version>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>Before Sending payload to Calm we  will validate and  look for value "null"  and will replace it with  null, regardless of whether it's in an object, an array, or nested deeply within the JSON structure. </description>
+<inserted/>
+<name>Fix Null Check</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>db151e6883f01e14655cc4b6feaad31f</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-09-19 08:01:29</sys_created_on>
+<sys_id>a85b926c83b41e14655cc4b6feaad381</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-09-19 08:01:29</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_script_include_99b80fbd37022300d27b8cf6c3990efb</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;x_nuta2_nutanix_ca.Nutanix_RequestUtil&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;name&gt;Nutanix_RequestUtil&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var Nutanix_RequestUtil = Class.create();
+Nutanix_RequestUtil.prototype = {
+    initialize: function() {
+        this.sub_deploy_rel = {};
+        this.deploy_pack_rel = {};
+        this.pack_serv_rel = {};
+        this.current = '';
+        this.exclusionList = gs.getProperty('x_nuta2_nutanix_ca.exclusion.list') + '';
+        this.disabledFields = gs.getProperty('x_nuta2_nutanix_ca.disabled.fields') + '';
+
+        this.bpType = '';
+        this.logger = new Nutanix_Calm_Logger();
+    },
+
+    transformTempBody: function(tmpbody, clonedJSON) {
+        //Logs to check the status.	
+        // 		gs.error("Tmpbody ::: " + JSON.stringify(tmpbody));
+        // 		gs.error("ASD ::: " + JSON.stringify(clonedJSON));
+
+        tmpbody.status.resources.substrate_definition_list = this._transformSubstrate(tmpbody.status.resources.substrate_definition_list, clonedJSON.status.resources.substrate_definition_list);
+        tmpbody.spec.resources.substrate_definition_list = this._transformSubstrate(tmpbody.spec.resources.substrate_definition_list, clonedJSON.spec.resources.substrate_definition_list);
+        return tmpbody;
+    },
+
+    _transformSubstrate: function(tmpSubstrate, clonedSubstrate) {
+
+        for (var i in tmpSubstrate) {
+            var matchingSubstrate = this._getMatchingSubstarteIndex(tmpSubstrate[i], clonedSubstrate);
+            tmpSubstrate[i] = this._makeNewSubstrate(tmpSubstrate[i], clonedSubstrate[(matchingSubstrate) ? matchingSubstrate : i]);
+        }
+
+        return tmpSubstrate;
+    },
+
+    _makeNewSubstrate: function(tmpSubstrate, clonedSubstrate) {
+
+        tmpSubstrate.editables = clonedSubstrate.editables;
+        //tmpSubstrate.create_spec = clonedSubstrate.create_spec;		
+
+        tmpSubstrate.readiness_probe = clonedSubstrate.readiness_probe;
+
+        for (var i in tmpSubstrate.readiness_probe) {
+
+            if (i + '' == 'login_credential_local_reference')
+                continue;
+
+            tmpSubstrate.readiness_probe[i] = clonedSubstrate.readiness_probe[i];
+        }
+
+        return tmpSubstrate;
+    },
+
+    _getMatchingSubstarteIndex: function(tmpSubstrate, clonedSubstrateArray) {
+
+        for (var i in clonedSubstrateArray)
+            if (clonedSubstrateArray[i].name + '' == tmpSubstrate.name + '' &amp;&amp; clonedSubstrateArray[i].type + '' == tmpSubstrate.type + '')
+                return i;
+    },
+
+    makeResourceBody: function(response, resources, current) {
+        try {
+            this.current = current;
+            var variables = this.current.variables;
+            this.logger.debug("Inside Nutanix_RequestUtil.makeResourceBody.");
+
+            this.bpType = (response.metadata.categories &amp;&amp; response.metadata.categories.TemplateType) ? response.metadata.categories.TemplateType + '' : "";
+            var makeRel = {
+                "substrate_definition_list": resources.substrate_definition_list,
+                "app_profile_list": resources.app_profile_list,
+                "service_definition_list": resources.service_definition_list,
+                "package_definition_list": resources.package_definition_list
+            };
+
+            this._makeRelations(makeRel);
+
+            return this._makeRequestBody(response, variables);
+        } catch (e) {
+            this.logger.error("Nutanix_RequestUtil.makeResourceBody :- Exception while parsing request variables. Error :- " + e);
+        }
+    },
+
+
+    _makeRequestBody: function(response, variables) {
+        try {
+            this.logger.debug("Inside Nutanix_RequestUtil._makeRequestBody.");
+
+            var specRes = response.spec.resources;
+            var statusRes = response.status.resources;
+
+            response.spec.resources.service_definition_list = this._fillServiceValue(statusRes.service_definition_list, specRes.service_definition_list);
+            response.spec.resources.substrate_definition_list = this._fillSubstrateValue(statusRes.substrate_definition_list, specRes.substrate_definition_list);
+            response.spec.resources.app_profile_list = this._fillAppProfileValue(statusRes.app_profile_list, specRes.app_profile_list);
+            response.spec.resources.credential_definition_list = this._fillCredebtialsValue(statusRes.credential_definition_list, specRes.credential_definition_list);
+            response.spec.resources.app_profile_list = this._fillSnapshotValue(response.spec.resources.app_profile_list, variables);
+            //  gs.info('_makeRequestBody log 1 ' + JSON.stringify(response.spec.resources));
+            var replaceNull = this._replaceNullValues(response.spec.resources);
+            // gs.info('_makeRequestBody log 2 ' + JSON.stringify(replaceNull));
+            return replaceNull;
+        } catch (e) {
+            this.logger.debug("Nutanix_RequestUtil._makeRequestBody :- Exception caught while making request body for sending request data. Error :- " + e);
+            this.logger.error("Exception caught while making request body for sending request data. Error :- " + e);
+        }
+    },
+    //Fix Null Validation
+    _replaceNullValues: function replaceNullValues(obj) {
+        try {
+            this.logger.debug("Inside Nutanix_RequestUtil._replaceNullValues.");
+            for (var key in obj) {
+                if (obj[key] === "null") {
+                    obj[key] = null;
+                } else if (typeof obj[key] === 'object' &amp;&amp; obj[key] !== null) { // If the value is an object the function calls itself recursively. This means that if any nested object has properties with the string "null", those will also be processed.
+                    obj[key] = replaceNullValues(obj[key]);
+                }
+            }
+            return obj;
+        } catch (e) {
+            this.logger.debug("Nutanix_RequestUtil._replaceNullValues :- Exception caught while null validation. Error :- " + e);
+            this.logger.error("Exception caught while validating null in the payload . Error :- " + e);
+        }
+    },
+
+    _fillCredebtialsValue: function(status, specs) {
+
+        try {
+            this.logger.debug("Inside Nutanix_RequestUtil._fillCredebtialsValue.");
+            for (var i in status) {
+                var credName = status[i].name.toLowerCase().replace(/ /g, '_');
+
+                //specs[i].name = this._getValue(this.current.variables[credName+'_credential_name']+'', typeof specs[i].name);
+                specs[i].username = this._getValue(this.current.variables[credName + '_username'] + '', typeof specs[i].username);
+                //specs[i].type  = this._getValue(this.current.variables[credName+'_secret_type']+'', typeof specs[i].type);
+
+                if (this.current.variables[credName + '_credential_reference']) {
+                    specs[i].editables.clone_from_reference = {
+                        "kind": "app_credential",
+                        "uuid": this.current.variables[credName + '_credential_reference'] + ''
+                    };
+                } else {
+                    if (this.current.variables[credName + '_ssh_private_key'] || this.current.variables[credName + '_password']) {
+
+                        specs[i].secret.attrs.is_secret_modified = true;
+                        specs[i].secret.value = (this.current.variables[credName + '_ssh_private_key']) ? (this.current.variables[credName + '_ssh_private_key'] + '').replace(/\r\n/g, '\n') : this.current.variables[credName + '_password'] + '';
+                    }
+
+                    if (this.current.variables[credName + '_passphrase']) {
+                        specs[i].passphrase = {
+                            "attrs": {
+                                "is_secret_modified": true
+                            },
+                            "value": (this.current.variables[credName + '_passphrase']) ? (this.current.variables[credName + '_passphrase'] + '') : this.current.variables[credName + '_password'] + ''
+                        };
+                    }
+                }
+
+            }
+
+            return specs;
+        } catch (e) {
+            this.logger.error("Nutanix_RequestUtil._fillCredebtialsValue :- Exception while filling credentials variables values. Error :- " + e);
+        }
+    },
+
+    _fillAppProfileValue: function(status, specs) {
+
+        try {
+            this.logger.debug("Inside Nutanix_RequestUtil._fillAppProfileValue.");
+            gs.info("c sys_id " + this.current.cat_item + " | application name : " + this.current.variables.default_profile);
+            var catalog_item_sys_id = new GlideRecord("x_nuta2_nutanix_ca_nutanix_runtime_configuration");
+            catalog_item_sys_id.addQuery('item_name', this.current.cat_item + '');
+            catalog_item_sys_id.query();
+            if (catalog_item_sys_id.next()) {
+                var catalog_sys_id = catalog_item_sys_id.blueprint;
+                gs.info("Nutanix_RequestUtil._fillAppProfileValue catalog_item_sys_id : " + catalog_item_sys_id.blueprint);
+            }
+            var profile_name = ((this.current.variables.default_profile + '').trim()) + '';
+            var blueprint_profile = new GlideRecord('x_nuta2_nutanix_ca_catalog_item_and_application_profile_relation');
+            blueprint_profile.addQuery('catalog_item.sys_id=' + catalog_sys_id + '^application_profile.name=' + profile_name);
+            blueprint_profile.query();
+            if (blueprint_profile.next()) {
+                var profile_sys_id = blueprint_profile.application_profile.sys_id;
+                gs.info("Nutanix_RequestUtil._fillAppProfileValue blueprint_profile : " + blueprint_profile.application_profile.sys_id);
+            }
+            //			var profile_sys_id = '824c4e3edb49ac505e1985184b961972';
+            gs.info("RV _fillAppProfileValue: " + JSON.stringify(status));
+            for (var i in status) {
+                var varList = status[i].variable_list;
+                for (var j in varList) {
+                    gs.info("varList : " + JSON.stringify(varList[j]));
+                    if (this.current.variables[varList[j].name]) {
+                        if (varList[j].type + '' == 'SECRET' || varList[j].type + '' == 'HTTP_SECRET' || varList[j].type + '' == 'EXEC_SECRET') {
+                            specs[i].variable_list[j].attrs.is_secret_modified = true;
+                        }
+                        if (varList[j].data_type + '' == 'LIST') {
+
+                            specs[i].variable_list[j].value = (this._getValue(this.current.variables[varList[j].name].getDisplayValue().replace(/, /g, ",") + '', typeof specs[i].variable_list[j].value).replace(/\r\n/g, '\n'));
+
+                        } else if (varList[j].type + '' == "LOCAL" &amp;&amp; varList[j].options &amp;&amp; varList[j].options.type + '' == "PREDEFINED" &amp;&amp; (varList[j].options.choices).length &lt;= 0 &amp;&amp; (varList[j].val_type + '' == 'DATE' || varList[j].val_type + '' == 'DATE_TIME')) {
+
+                            var newdtVal = this._formattedDateTimeNutanix(this.current.variables[varList[j].name].getDisplayValue() + '', varList[j].val_type + '');
+
+                            specs[i].variable_list[j].value = this._getValue(newdtVal + '', typeof newdtVal);
+
+                        } else {
+                            specs[i].variable_list[j].value = (this._getValue(this.current.variables[varList[j].name] + '', typeof specs[i].variable_list[j].value).replace(/\r\n/g, '\n'));
+                        }
+
+                    }
+                    if (this.current.variables[varList[j].name + '_' + profile_sys_id]) {
+                        if (varList[j].type + '' == 'SECRET' || varList[j].type + '' == 'HTTP_SECRET' || varList[j].type + '' == 'EXEC_SECRET') {
+                            specs[i].variable_list[j].attrs.is_secret_modified = true;
+                        }
+                        if (varList[j].data_type + '' == 'LIST') {
+
+                            specs[i].variable_list[j].value = (this._getValue(this.current.variables[varList[j].name + '_' + profile_sys_id].getDisplayValue().replace(/, /g, ",") + '', typeof specs[i].variable_list[j].value).replace(/\r\n/g, '\n'));
+
+                        } else if (varList[j].type + '' == "LOCAL" &amp;&amp; varList[j].options &amp;&amp; varList[j].options.type + '' == "PREDEFINED" &amp;&amp; (varList[j].options.choices).length &lt;= 0 &amp;&amp; (varList[j].val_type + '' == 'DATE' || varList[j].val_type + '' == 'DATE_TIME')) {
+
+                            var newdtVal = this._formattedDateTimeNutanix(this.current.variables[varList[j].name + '_' + profile_sys_id].getDisplayValue() + '', varList[j].val_type + '');
+
+                            specs[i].variable_list[j].value = this._getValue(newdtVal + '', typeof newdtVal);
+
+                        } else {
+                            specs[i].variable_list[j].value = (this._getValue(this.current.variables[varList[j].name + '_' + profile_sys_id] + '', typeof specs[i].variable_list[j].value).replace(/\r\n/g, '\n'));
+                        }
+
+                    }
+                }
+
+                var deployemntList = status[i].deployment_create_list;
+                for (var j in deployemntList) {
+
+                    var serviceName = "";
+
+                    if (this.bpType)
+                        serviceName = "Single Vm Configuration";
+                    else
+                        serviceName = this.pack_serv_rel[this.deploy_pack_rel[deployemntList[j].uuid + ''][0].package_uuid][0].serv_name;
+
+                    serviceName = serviceName.toLowerCase().replace(/ /g, '_');
+
+                    specs[i].deployment_create_list[j].default_replicas = this._getValue(this.current.variables[serviceName + '_default_replicas'] + '', typeof specs[i].deployment_create_list[j].default_replicas);
+                    specs[i].deployment_create_list[j].min_replicas = this._getValue(this.current.variables[serviceName + '_min_number_of_replicas'] + '', typeof specs[i].deployment_create_list[j].min_replicas);
+                    specs[i].deployment_create_list[j].max_replicas = this._getValue(this.current.variables[serviceName + '_max_number_of_replicas'] + '', typeof specs[i].deployment_create_list[j].max_replicas);
+                }
+            }
+
+            var replace_is_modified = JSON.stringify(specs).replace(/"is_secret_modified":true/g, '"is_secret_modified":false');
+            var new_spec = JSON.parse(replace_is_modified);
+
+            return new_spec;
+
+        } catch (e) {
+            this.logger.error("Nutanix_RequestUtil._fillAppProfileValue :- Exception while filling profiles variables values. Error :- " + e);
+        }
+    },
+
+    _fillSnapshotValue: function(profileList, variables) {
+        for (var i in profileList) {
+            var snapshotList = profileList[i].snapshot_config_list;
+            for (var j in snapshotList) {
+                if (variables[snapshotList[j].name + '_snapshot_policy'] != '') {
+                    var snap_uuid = variables[snapshotList[j].name + '_snapshot_policy'] + '';
+                    profileList[i].snapshot_config_list[j].attrs_list[0].app_protection_policy_reference = {
+                        "uuid": snap_uuid
+                    };
+                }
+                if (variables[snapshotList[j].name + '_snapshot_local_rule'] != '') {
+                    var local_uuid = variables[snapshotList[j].name + '_snapshot_local_rule'] + '';
+                    profileList[i].snapshot_config_list[j].attrs_list[0].app_protection_rule_reference = {
+                        "uuid": local_uuid
+                    };
+                }
+            }
+        }
+        return profileList;
+    },
+
+    _fillSubstrateValue: function(status, specs) {
+
+        try {
+            this.logger.debug("Inside Nutanix_RequestUtil._fillSubstrateValue.");
+
+            for (var i in status) {
+
+                var serviceName = "";
+
+                if (this.bpType)
+                    serviceName = "Single Vm Configuration";
+                else
+                    serviceName = this.pack_serv_rel[this.deploy_pack_rel[this.sub_deploy_rel[status[i].uuid].deployemnt_uuid + ''][0].package_uuid][0].serv_name;
+
+                serviceName = serviceName.toLowerCase().replace(/ /g, '_');
+
+                var varList = status[i].variable_list;
+                for (var j in varList) {
+                    if (this.current.variables[serviceName + '_' + varList[j].name]) {
+                        if (varList[j].type + '' == 'SECRET') {
+                            specs[i].variable_list[j].attrs.is_secret_modified = true;
+                        }
+                        specs[i].variable_list[j].value = this._getValue(this.current.variables[serviceName + '_' + varList[j].name] + '', specs[i].variable_list[j].val_type);
+                    }
+                }
+
+                var readinessProbe = status[i].readiness_probe;
+                for (var j in readinessProbe) {
+
+                    if (j == 'login_credential_local_reference' &amp;&amp; this.current.variables[serviceName + '_credential']) {
+
+                        specs[i].readiness_probe[j].name = this._getValue(this.current.variables[serviceName + '_credential'] + '', typeof specs[i].readiness_probe[j].name);
+                    } else {
+
+                        if (j == 'disable_readiness_probe') {
+
+                            if (this.current.variables[serviceName + '_' + j])
+                                specs[i].readiness_probe[j] = this._getValue((this.current.variables[serviceName + '_' + j] + '' == 'true') ? false : true, typeof specs[i].readiness_probe[j]);
+
+                        } else {
+                            if (this.current.variables[serviceName + '_' + j])
+                                specs[i].readiness_probe[j] = this._getValue(this.current.variables[serviceName + '_' + j] + '', typeof specs[i].readiness_probe[j]);
+                        }
+                    }
+                }
+
+                var createSpec = status[i].create_spec;
+                if (createSpec.name &amp;&amp; this.current.variables[serviceName + '_name']) {
+                    specs[i].create_spec.name = this._getValue(this.current.variables[serviceName + '_name'] + '', typeof specs[i].create_spec.name);
+                }
+
+
+
+
+
+                if (createSpec.resources &amp;&amp; createSpec.resources.name &amp;&amp; this.current.variables[serviceName + '_name']) {
+                    specs[i].create_spec.resources.name = this._getValue(this.current.variables[serviceName + '_name'] + '', typeof specs[i].create_spec.name);
+                }
+
+                if (createSpec.resources &amp;&amp; createSpec.resources.vm_name &amp;&amp; this.current.variables[serviceName + '_name']) {
+                    specs[i].create_spec.resources.vm_name = this._getValue(this.current.variables[serviceName + '_name'] + '', typeof specs[i].create_spec.name);
+                }
+
+
+
+
+
+                if (createSpec.host &amp;&amp; this.current.variables[serviceName + '_host']) {
+
+                    //Disabled for plguin 1.1
+
+                    //specs[i].create_spec.host = this._getValue(this.current.variables[serviceName+'_host']+'', typeof specs[i].create_spec.host);
+                }
+                if (createSpec.template &amp;&amp; this.current.variables[serviceName + '_template']) {
+                    //Disabled for plguin 1.1
+
+                    //specs[i].create_spec.template = this._getValue(this.current.variables[serviceName+'_template']+'', typeof specs[i].create_spec.template);
+                }
+                if (createSpec.datastore &amp;&amp; this.current.variables[serviceName + '_datastore']) {
+                    //Disabled for plguin 1.1
+
+                    //specs[i].create_spec._datastore = this._getValue(this.current.variables[serviceName+'_datastore']+'', typeof specs[i].create_spec.datastore);
+                }
+                if (createSpec.address &amp;&amp; this.current.variables[serviceName + '_address']) {
+
+                    //Disabled for plguin 1.1
+
+                    //specs[i].create_spec.address = this._getValue(this.current.variables[serviceName+'_address']+'', typeof specs[i].create_spec.address);
+                }
+                if (createSpec.drs_mode &amp;&amp; this.current.variables[serviceName + '_drs_mode']) {
+
+                    specs[i].create_spec.drs_mode = this._getValue(this.current.variables[serviceName + '_drs_mode'] + '', typeof specs[i].create_spec.drs_mode);
+                }
+
+
+
+
+
+
+
+
+                for (var j in createSpec.resources) {
+
+                    if (j == 'security_group_list' &amp;&amp; this.current.variables[serviceName + '_name']) {
+
+                        //Disabled for plguin 1.1
+
+                        // 						var secGrp = (this.current.variables[serviceName+'_security_group_list']+'').split(',');
+                        // 						for(var k in secGrp){
+                        // 							specs[i].create_spec.resources[j][k].security_group_id = secGrp[k]+'';
+                        // 						}
+
+
+                    } else if (j == 'block_device_map') {
+                        //Disabled for plguin 1.1
+
+                        //
+                        // 						if(specs[i].create_spec.resources[j].root_disk){
+                        // 							if(this.current.variables[serviceName+'_device_name']+'')
+                        // 								specs[i].create_spec.resources[j].root_disk.device_name = this._getValue(this.current.variables[serviceName+'_device_name']+'', typeof specs[i].create_spec.resources[j].root_disk.device_name);
+
+                        // 							if(this.current.variables[serviceName+'_size_gb']+'')
+                        // 								specs[i].create_spec.resources[j].root_disk.size_gb = this._getValue(this.current.variables[serviceName+'_size_gb']+'', typeof specs[i].create_spec.resources[j].root_disk.size_gb);
+
+                        // 							if(this.current.variables[serviceName+'_volume_type']+'')
+                        // 								specs[i].create_spec.resources[j].root_disk.volume_type = this._getValue(this.current.variables[serviceName+'_volume_type']+'', typeof specs[i].create_spec.resources[j].root_disk.volume_type);
+
+                        // 							specs[i].create_spec.resources[j].root_disk.delete_on_termination = this._getValue(this.current.variables[serviceName+'_delete_on_termination']+'', typeof specs[i].create_spec.resources[j].root_disk.delete_on_termination);
+                        // 						}
+
+                        // 						var dataList = specs[i].create_spec.resources[j].data_disk_list;
+                        // 						for(var k in dataList){
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_device_name']+'')
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].device_name = this._getValue(this.current.variables[serviceName+'_'+k+'_device_name']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].device_name);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_size_gb']+'')
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].size_gb = this._getValue(this.current.variables[serviceName+'_'+k+'_size_gb']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].size_gb);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_volume_type']+'')
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].volume_type = this._getValue(this.current.variables[serviceName+'_'+k+'_volume_type']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].volume_type);
+
+                        // 							specs[i].create_spec.resources[j].data_disk_list[k].delete_on_termination = this._getValue(this.current.variables[serviceName+'_'+k+'_delete_on_termination']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].delete_on_termination);
+                        // 						}
+
+                    } else if (j == 'hw_profile') {
+                        if (this.current.variables[serviceName + '_' + j])
+                            specs[i].create_spec.resources[j].vm_size = this._getValue(this.current.variables[serviceName + '_' + j] + '', typeof specs[i].create_spec.resources[j].vm_size);
+                    } else if (j == 'disks') {
+                        //Disabled for plguin 1.1
+
+                        //
+                        // 						var dataList = specs[i].create_spec.resources[j];
+                        // 						for(var k in dataList){
+
+                        // 							if(!specs[i].create_spec.resources[j][k].initializeParams)
+                        // 								specs[i].create_spec.resources[j][k].initializeParams = {};
+
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_storage_type']+'')
+                        // 								specs[i].create_spec.resources[j][k].initializeParams.diskType = this._getValue(this.current.variables[serviceName+'_'+k+'_storage_type']+'', typeof specs[i].create_spec.resources[j][k].initializeParams.diskType);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_source_image']+'')
+                        // 								specs[i].create_spec.resources[j][k].initializeParams.sourceImage = this._getValue(this.current.variables[serviceName+'_'+k+'_source_image']+'', typeof specs[i].create_spec.resources[j][k].initializeParams.sourceImage);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_size_in_gb']+'')
+                        // 								specs[i].create_spec.resources[j][k].initializeParams.diskSizeGb = this._getValue(this.current.variables[serviceName+'_'+k+'_size_in_gb']+'', typeof specs[i].create_spec.resources[j][k].initializeParams.diskSizeGb);
+
+                        // 							specs[i].create_spec.resources[j][k].autoDelete = this._getValue(this.current.variables[serviceName+'_'+k+'_delete_when_instance_is_deleted']+'', typeof specs[i].create_spec.resources[j][k].autoDelete);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_disk']+'')
+                        // 								specs[i].create_spec.resources[j][k].source = this._getValue(this.current.variables[serviceName+'_'+k+'_disk']+'', typeof specs[i].create_spec.resources[j][k].source);
+                        // 						}
+
+                    } else if (j == 'blankDisks') {
+
+                        //Disabled for plguin 1.1
+
+                        //var dataList = specs[i].create_spec.resources[j];
+                        // 						for(var k in dataList){
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_disk_type']+'')
+                        // 								specs[i].create_spec.resources[j][k].disk_type = this._getValue(this.current.variables[serviceName+'_'+k+'_disk_type']+'', typeof specs[i].create_spec.resources[j][k].disk_type);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_disk_name']+'')
+                        // 								specs[i].create_spec.resources[j][k].name = this._getValue(this.current.variables[serviceName+'_'+k+'_disk_name']+'', typeof specs[i].create_spec.resources[j][k].name);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_size_in_gb']+'')
+                        // 								specs[i].create_spec.resources[j][k].sizeGb = this._getValue(this.current.variables[serviceName+'_'+k+'_size_in_gb']+'', typeof specs[i].create_spec.resources[j][k].sizeGb);
+
+                        // 							specs[i].create_spec.resources[j][k].autoDelete = this._getValue(this.current.variables[serviceName+'_'+k+'_delete_when_instance_is_deleted']+'', typeof specs[i].create_spec.resources[j][k].autoDelete);
+                        // 						}
+
+                    } else if (j == 'networkInterfaces') {
+
+                        //Disabled for plguin 1.1
+
+                        //var nicList = specs[i].create_spec.resources[j];
+                        // 						for(var k in nicList){
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_associate_public_ip_address']+'')
+                        // 								specs[i].create_spec.resources[j][k].associatePublicIP = this._getValue(this.current.variables[serviceName+'_'+k+'_associate_public_ip_address']+'', typeof specs[i].create_spec.resources[j][k].associatePublicIP);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_network']+'')
+                        // 								specs[i].create_spec.resources[j][k].network = this._getValue(this.current.variables[serviceName+'_'+k+'_network']+'', typeof specs[i].create_spec.resources[j][k].network);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_subnetwork']+'')
+                        // 								specs[i].create_spec.resources[j][k].subnetwork = this._getValue(this.current.variables[serviceName+'_'+k+'_subnetwork']+'', typeof specs[i].create_spec.resources[j][k].subnetwork);
+
+                        // 							if(!specs[i].create_spec.resources[j][k].accessConfigs)
+                        // 								specs[i].create_spec.resources[j][k].accessConfigs = [];
+
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_access_configuration_name']+'')
+                        // 								specs[i].create_spec.resources[j][k].accessConfigs.push({
+                        // 									'name' : this._getValue(this.current.variables[serviceName+'_'+k+'_access_configuration_name']+'', typeof specs[i].create_spec.resources[j][k].accessConfigs[0].name),
+                        // 									'config_type' : this._getValue(this.current.variables[serviceName+'_'+k+'_access_configuration_type']+'', typeof specs[i].create_spec.resources[j][k].accessConfigs[0].config_type)
+                        // 								});
+
+                        // 						}
+
+                    } else if (j == 'nic_list') {
+
+                        var nicList = specs[i].create_spec.resources[j];
+                        for (var k in nicList) {
+
+                            if (this.current.variables[serviceName + '_' + k + '_network']) {
+
+                                // 								//Disabled for plguin 1.1
+
+                                //if(this.current.variables[serviceName+'_'+k+'_adapter_type']+'')
+                                // 									specs[i].create_spec.resources[j][k].nic_type = this._getValue(this.current.variables[serviceName+'_'+k+'_adapter_type']+'', typeof specs[i].create_spec.resources[j][k].nic_type);
+
+                                // 								if(this.current.variables[serviceName+'_'+k+'_network_type']+'')
+                                // 									specs[i].create_spec.resources[j][k].net_name = this._getValue(this.current.variables[serviceName+'_'+k+'_network_type']+'', typeof specs[i].create_spec.resources[j][k].net_name);
+                            } else {
+                                var provider_type = status[i].type + '';
+                                if (provider_type.includes('AHV')) {
+                                    if (!specs[i].create_spec.resources[j][k].subnet_reference)
+                                        specs[i].create_spec.resources[j][k].subnet_reference = {};
+
+                                    if (this.current.variables[serviceName + '_' + k + '_nic_' + (parseInt(k) + 1)] + '')
+                                        specs[i].create_spec.resources[j][k].subnet_reference.uuid = this._getValue(this.current.variables[serviceName + '_' + k + '_nic_' + (parseInt(k) + 1)] + '', typeof specs[i].create_spec.resources[j][k].subnet_reference.uuid);
+                                }
+                            }
+                        }
+                    } else if (j == 'nw_profile') {
+                        //Disabled for plguin 1.1
+
+                        // 						var nicList = specs[i].create_spec.resources[j].nic_list;
+                        // 						for(var k in nicList){
+
+
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_nic_name']+'')
+                        // 								specs[i].create_spec.resources[j].nic_list[k].nic_name = this._getValue(this.current.variables[serviceName+'_'+k+'_nic_name']+'', typeof specs[i].create_spec.resources[j].nic_list[k].nic_name);
+
+
+                        // 							//Disabled for plguin 1.1
+                        // 							//specs[i].create_spec.resources[j].nic_list[k].nsg_name = this._getValue(this.current.variables[serviceName+'_'+k+'_security_group']+'', typeof specs[i].create_spec.resources[j].nic_list[k].nsg_name);
+                        // 							//specs[i].create_spec.resources[j].nic_list[k].vnet_name = this._getValue(this.current.variables[serviceName+'_'+k+'_virtual_network']+'', typeof specs[i].create_spec.resources[j].nic_list[k].vnet_name);
+                        // 							//specs[i].create_spec.resources[j].nic_list[k].subnet_name = this._getValue(this.current.variables[serviceName+'_'+k+'_subnet']+'', typeof specs[i].create_spec.resources[j].nic_list[k].subnet_name);
+
+                        // 							if(!specs[i].create_spec.resources[j].nic_list[k].public_ip_info)
+                        // 								specs[i].create_spec.resources[j].nic_list[k].public_ip_info = {};
+
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_public_ip_config_name']+'')
+                        // 								specs[i].create_spec.resources[j].nic_list[k].public_ip_info.ip_name = this._getValue(this.current.variables[serviceName+'_'+k+'_public_ip_config_name']+'', typeof specs[i].create_spec.resources[j].nic_list[k].public_ip_info.ip_name);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_public_ip_config_adapter_method']+'')
+                        // 								specs[i].create_spec.resources[j].nic_list[k].public_ip_info.ip_allocation_method = this._getValue(this.current.variables[serviceName+'_'+k+'_public_ip_config_adapter_method']+'', typeof specs[i].create_spec.resources[j].nic_list[k].public_ip_info.ip_allocation_method);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_public_ip_config_dns_label']+'')
+                        // 								specs[i].create_spec.resources[j].nic_list[k].public_ip_info.dns_label = this._getValue(this.current.variables[serviceName+'_'+k+'_public_ip_config_dns_label']+'', typeof specs[i].create_spec.resources[j].nic_list[k].public_ip_info.dns_label);
+
+                        // 							if(!specs[i].create_spec.resources[j].nic_list[k].private_ip_info)
+                        // 								specs[i].create_spec.resources[j].nic_list[k].private_ip_info = {};
+
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_private_ip_config_allocation_method']+'')
+                        // 								specs[i].create_spec.resources[j].nic_list[k].private_ip_info.ip_allocation_method = this._getValue(this.current.variables[serviceName+'_'+k+'_private_ip_config_allocation_method']+'', typeof specs[i].create_spec.resources[j].nic_list[k].private_ip_info.ip_allocation_method);
+
+                        // 						}
+
+                    } else if (j == 'guest_customization') {
+
+                        var providerType = specs[i].create_spec.type + '';
+
+                        if (providerType.includes('vmware')) {
+
+                            if (!specs[i].create_spec.resources[j].linux_data)
+                                specs[i].create_spec.resources[j].linux_data = {};
+
+
+                            if (this.current.variables[serviceName + '_hostname'] + '')
+                                specs[i].create_spec.resources[j].linux_data.hostname = this._getValue(this.current.variables[serviceName + '_hostname'] + '', typeof specs[i].create_spec.resources[j].linux_data.hostname);
+
+                            if (this.current.variables[serviceName + '_domain'] + '')
+                                specs[i].create_spec.resources[j].linux_data.domain = this._getValue(this.current.variables[serviceName + '_domain'] + '', typeof specs[i].create_spec.resources[j].linux_data.domain);
+
+                            if (this.current.variables[serviceName + '_timezone'] + '')
+                                specs[i].create_spec.resources[j].linux_data.timezone = this._getValue(this.current.variables[serviceName + '_timezone'] + '', typeof specs[i].create_spec.resources[j].linux_data.timezone);
+
+                            if (this.current.variables[serviceName + '_hardware_clock_utc'] + '')
+                                specs[i].create_spec.resources[j].linux_data.hw_utc_clock = this._getValue(this.current.variables[serviceName + '_hardware_clock_utc'] + '', typeof specs[i].create_spec.resources[j].linux_data.hw_utc_clock);
+
+                            if (this.current.variables[serviceName + '_dns_primary'] + '')
+                                specs[i].create_spec.resources[j].linux_data.dns_primary = this._getValue(this.current.variables[serviceName + '_dns_primary'] + '', typeof specs[i].create_spec.resources[j].linux_data.dns_primary);
+
+                            if (this.current.variables[serviceName + '_dns_secondary'] + '')
+                                specs[i].create_spec.resources[j].linux_data.dns_secondary = this._getValue(this.current.variables[serviceName + '_dns_secondary'] + '', typeof specs[i].create_spec.resources[j].linux_data.dns_secondary);
+
+                            if (this.current.variables[serviceName + '_dns_tertiary'] + '')
+                                specs[i].create_spec.resources[j].linux_data.dns_tertiary = this._getValue(this.current.variables[serviceName + '_dns_tertiary'] + '', typeof specs[i].create_spec.resources[j].linux_data.dns_tertiary);
+
+                            if (!specs[i].create_spec.resources[j].linux_data.dns_search_path)
+                                specs[i].create_spec.resources[j].linux_data.dns_search_path = [];
+
+
+                            if (this.current.variables[serviceName + '_dns_search_path'] + '')
+                                specs[i].create_spec.resources[j].linux_data.dns_search_path.push(this._getValue(this.current.variables[serviceName + '_dns_search_path'] + '', typeof specs[i].create_spec.resources[j].linux_data.dns_search_path[0]));
+
+
+                            //Disabled for plguin 1.1
+
+                            //for(var k in specs[i].create_spec.resources[j].linux_data.network_settings)
+                            // 								if(this.current.variables[serviceName+'_'+k+'_use_dhcp']+'')
+                            // 									specs[i].create_spec.resources[j].linux_data.network_settings[k].is_dhcp = this._getValue(this.current.variables[serviceName+'_'+k+'_use_dhcp']+'', typeof specs[i].create_spec.resources[j].linux_data.network_settings[k].is_dhcp);	
+
+                        } else {
+
+                            if (this.current.variables[serviceName + '_type'] + '' == 'Sysprep') {
+
+                                if (!specs[i].create_spec.resources[j].sysprep)
+                                    specs[i].create_spec.resources[j].sysprep = {};
+
+                                specs[i].create_spec.resources[j].cloud_init = null;
+
+                                if (this.current.variables[serviceName + '_install_type'] + '')
+                                    specs[i].create_spec.resources[j].sysprep.install_type = this._getValue(this.current.variables[serviceName + '_install_type'] + '', typeof specs[i].create_spec.resources[j].sysprep.install_type);
+
+                                if (this.current.variables[serviceName + '_script'] + '')
+                                    specs[i].create_spec.resources[j].sysprep.unattend_xml = this._getValue(this.current.variables[serviceName + '_script'] + '', typeof specs[i].create_spec.resources[j].sysprep.unattend_xml);
+                            } else if (this.current.variables[serviceName + '_type'] + '' == 'Cloud-init') {
+
+                                if (!specs[i].create_spec.resources[j])
+                                    specs[i].create_spec.resources[j] = {};
+
+                                if (!specs[i].create_spec.resources[j].cloud_init)
+                                    specs[i].create_spec.resources[j].cloud_init = {};
+
+                                specs[i].create_spec.resources[j].sysprep = null;
+
+                                if (this.current.variables[serviceName + '_script'] + '')
+                                    specs[i].create_spec.resources[j].cloud_init.user_data = this._getValue(this.current.variables[serviceName + '_script'] + '', typeof specs[i].create_spec.resources[j].cloud_init.user_data).replace(/\r\n/g, '\n');
+                            }
+
+
+
+                        }
+                    } else if (j == 'guestCustomization') {
+
+
+                        if (this.current.variables[serviceName + '_startup_script'] + '')
+                            specs[i].create_spec.resources[j].startupScript = this._getValue(this.current.variables[serviceName + '_startup_script'] + '', typeof specs[i].create_spec.resources[j].startupScript);
+
+                        var items = (this.current.variables[serviceName + '_security_groups'] + '').split(',');
+
+                        if (!specs[i].create_spec.resources.tags)
+                            specs[i].create_spec.resources.tags = {};
+
+                        if (!specs[i].create_spec.resources.tags.items)
+                            specs[i].create_spec.resources.tags.items = [];
+
+
+                        for (var k in items) {
+                            if (this.current.variables[serviceName + '_key_' + k] + '')
+                                specs[i].create_spec.resources.tags.items[k] = this._getValue(this.current.variables[serviceName + '_key_' + k] + '', typeof specs[i].create_spec.resources.tags.items[k]);
+                        }
+                    } else if (j == 'os_profile') {
+
+                        if (!specs[i].create_spec.resources[j].linux_config)
+                            specs[i].create_spec.resources[j].linux_config = {};
+
+                        if (this.current.variables[serviceName + '_cloud_init_script'])
+                            specs[i].create_spec.resources[j].linux_config.custom_data = this._getValue(this.current.variables[serviceName + '_cloud_init_script'] + '', typeof specs[i].create_spec.resources[j].linux_config.custom_data);
+
+
+                        var osProfileList = specs[i].create_spec.resources[j].secrets;
+
+                        for (var k in osProfileList) {
+
+                            if (this.current.variables[serviceName + '_' + k + '_valut_id'])
+                                specs[i].create_spec.resources[j].secrets[k].source_vault_id = this._getValue(this.current.variables[serviceName + '_' + k + '_valut_id'] + '', typeof specs[i].create_spec.resources[j].secrets[k].source_vault_id);
+
+                            for (var w in osProfileList[k].vault_certificates) {
+
+                                if (this.current.variables[serviceName + '_' + k + '_certificate_config_url_' + w])
+                                    specs[i].create_spec.resources[j].secrets[k].vault_certificates[w].certificate_url = this._getValue(this.current.variables[serviceName + '_' + k + '_certificate_config_url_' + w] + '', typeof specs[i].create_spec.resources[j].secrets[k].vault_certificates[w].certificate_url);
+                            }
+
+                        }
+
+                    } else if (j == 'storage_profile') {
+
+                        if (!specs[i].create_spec.resources[j].image_details)
+                            specs[i].create_spec.resources[j].image_details = {};
+
+                        if (this.current.variables[serviceName + '_use_custom_image'])
+                            specs[i].create_spec.resources[j].image_details.use_custom_image = this._getValue(this.current.variables[serviceName + '_use_custom_image'] + '', typeof specs[i].create_spec.resources[j].image_details.use_custom_image);
+
+
+                        if (this.current.variables[serviceName + '_publisher'])
+                            specs[i].create_spec.resources[j].image_details.publisher = this._getValue(this.current.variables[serviceName + '_publisher'] + '', typeof specs[i].create_spec.resources[j].image_details.publisher);
+
+                        if (this.current.variables[serviceName + '_offer'])
+                            specs[i].create_spec.resources[j].image_details.offer = this._getValue(this.current.variables[serviceName + '_offer'] + '', typeof specs[i].create_spec.resources[j].image_details.offer);
+
+                        if (this.current.variables[serviceName + '_sku'])
+                            specs[i].create_spec.resources[j].image_details.sku = this._getValue(this.current.variables[serviceName + '_sku'] + '', typeof specs[i].create_spec.resources[j].image_details.sku);
+
+                        if (this.current.variables[serviceName + '_version'])
+                            specs[i].create_spec.resources[j].image_details.version = this._getValue(this.current.variables[serviceName + '_version'] + '', typeof specs[i].create_spec.resources[j].image_details.version);
+
+
+                        if (this.current.variables[serviceName + '_use_managed_disks'])
+                            specs[i].create_spec.resources[j].is_managed = this._getValue(this.current.variables[serviceName + '_use_managed_disks'] + '', typeof specs[i].create_spec.resources[j].is_managed);
+
+
+                        if (!specs[i].create_spec.resources[j].os_disk_details)
+                            specs[i].create_spec.resources[j].os_disk_details = {};
+
+                        if (this.current.variables[serviceName + '_disk_name'])
+                            specs[i].create_spec.resources[j].os_disk_details.name = this._getValue(this.current.variables[serviceName + '_disk_name'] + '', typeof specs[i].create_spec.resources[j].os_disk_details.name);
+
+                        if (this.current.variables[serviceName + '_storage_type'])
+                            specs[i].create_spec.resources[j].os_disk_details.storage_type = this._getValue(this.current.variables[serviceName + '_storage_type'] + '', typeof specs[i].create_spec.resources[j].os_disk_details.storage_type);
+
+                        if (this.current.variables[serviceName + '_disk_caching_type'])
+                            specs[i].create_spec.resources[j].os_disk_details.caching_type = this._getValue(this.current.variables[serviceName + '_disk_caching_type'] + '', typeof specs[i].create_spec.resources[j].os_disk_details.caching_type);
+
+                        if (this.current.variables[serviceName + '_disk_create_options'])
+                            specs[i].create_spec.resources[j].os_disk_details.create_option = this._getValue(this.current.variables[serviceName + '_disk_create_options'] + '', typeof specs[i].create_spec.resources[j].os_disk_details.create_option);
+
+
+                        //Disabled for plguin 1.1
+
+                        //var dataList = specs[i].create_spec.resources[j].data_disk_list;
+
+                        // 						for(var k in dataList){
+
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_disk_name'])
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].name = this._getValue(this.current.variables[serviceName+'_'+k+'_disk_name']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].name);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_storage_type'])
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].storage_type = this._getValue(this.current.variables[serviceName+'_'+k+'_storage_type']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].storage_type);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_disk_caching_type'])
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].caching_type = this._getValue(this.current.variables[serviceName+'_'+k+'_disk_caching_type']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].caching_type);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_size_gb'])
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].size_in_gb = this._getValue(this.current.variables[serviceName+'_'+k+'_size_gb']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].size_in_gb);
+
+                        // 							if(this.current.variables[serviceName+'_'+k+'_disk_lun'])
+                        // 								specs[i].create_spec.resources[j].data_disk_list[k].lun = this._getValue(this.current.variables[serviceName+'_'+k+'_disk_lun']+'', typeof specs[i].create_spec.resources[j].data_disk_list[k].lun);
+                        // 						}
+
+                    } else if (j == 'serviceAccounts') {
+
+                        if (!specs[i].create_spec.resources[j])
+                            specs[i].create_spec.resources[j] = [];
+
+                        if (this.current.variables[serviceName + '_service_account'])
+                            specs[i].create_spec.resources[j].email = this._getValue(this.current.variables[serviceName + '_service_account'] + '', typeof specs[i].create_spec.resources[j][0].email);
+
+                    } else if (j == 'sshKeys') {
+
+                        //Disabled for plguin 1.1
+
+                        //var sshList = specs[i].create_spec.resources[j];
+
+                        // 						for(var k in sshList){
+                        // 							if(this.current.variables[serviceName+'_key_'+k])
+                        // 								specs[i].create_spec.resources[j][k] = this._getValue(this.current.variables[serviceName+'_key_'+k]+'', typeof specs[i].create_spec.resources[j][k]);
+                        // 						}
+                    } else if (j == 'categories') {
+
+                        continue;
+                        //not handled
+                    } else if (j == 'disk_list') {
+
+                        //Disabled for plguin 1.1
+
+                        //var dataList = specs[i].create_spec.resources[j];
+
+                        // 						for(var k in dataList){
+
+                        // 							if(dataList[k].adapter_type){
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_adapter_type'])
+                        // 									specs[i].create_spec.resources[j][k].adapter_type = this._getValue(this.current.variables[serviceName+'_'+k+'_adapter_type']+'', typeof specs[i].create_spec.resources[j][k].adapter_type);
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_device_type'])
+                        // 									specs[i].create_spec.resources[j][k].disk_type = this._getValue(this.current.variables[serviceName+'_'+k+'_device_type']+'', typeof specs[i].create_spec.resources[j][k].disk_type);
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_size'])
+                        // 									specs[i].create_spec.resources[j][k].disk_size_mb = this._getValue(this.current.variables[serviceName+'_'+k+'_size']+'', typeof specs[i].create_spec.resources[j][k].disk_size_mb);
+
+                        // 							}else if(dataList[k] &amp;&amp; dataList[k].data_source_reference &amp;&amp; dataList[k].data_source_reference.kind=='image'){
+
+                        // 								if(!specs[i].create_spec.resources[j][k].data_source_reference)
+                        // 									specs[i].create_spec.resources[j][k].data_source_reference = {};
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_image'])
+                        // 									specs[i].create_spec.resources[j][k].data_source_reference.name = this._getValue(this.current.variables[serviceName+'_'+k+'_image']+'', typeof specs[i].create_spec.resources[j][k].data_source_reference.name);
+
+                        // 								if(!specs[i].create_spec.resources[j][k].device_properties)
+                        // 									specs[i].create_spec.resources[j][k].device_properties = {};
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_device_type'])
+                        // 									specs[i].create_spec.resources[j][k].device_properties.device_type = this._getValue(this.current.variables[serviceName+'_'+k+'_device_type']+'', typeof specs[i].create_spec.resources[j][k].device_properties.device_type);
+
+                        // 								if(!specs[i].create_spec.resources[j][k].device_properties.disk_address)
+                        // 									specs[i].create_spec.resources[j][k].device_properties.disk_address = {};
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_device_bus'])
+                        // 									specs[i].create_spec.resources[j][k].device_properties.disk_address.adapter_type = this._getValue(this.current.variables[serviceName+'_'+k+'_device_bus']+'', typeof specs[i].create_spec.resources[j][k].device_properties.disk_address.adapter_type);								
+
+
+                        // 								if(!specs[i].create_spec.resources.boot_config)
+                        // 									specs[i].create_spec.resources.boot_config= {};
+
+                        // 								if(!specs[i].create_spec.resources.boot_config.boot_device)
+                        // 									specs[i].create_spec.resources.boot_config.boot_device = {};
+
+                        // 								if(!specs[i].create_spec.resources.boot_config.boot_device.disk_address)
+                        // 									specs[i].create_spec.resources.boot_config.boot_device.disk_address = {};
+
+                        // 								specs[i].create_spec.resources.boot_config.boot_device.disk_address.device_index = k;
+
+
+                        // 							}else{
+
+                        // 								if(!specs[i].create_spec.resources[j][k].device_properties)
+                        // 									specs[i].create_spec.resources[j][k].device_properties = {};
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_device_type'])
+                        // 									specs[i].create_spec.resources[j][k].device_properties.device_type = this._getValue(this.current.variables[serviceName+'_'+k+'_device_type']+'', typeof specs[i].create_spec.resources[j][k].device_properties.device_type);
+
+                        // 								if(!specs[i].create_spec.resources[j][k].device_properties.disk_address)
+                        // 									specs[i].create_spec.resources[j][k].device_properties.disk_address = {};
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_device_bus'])
+                        // 									specs[i].create_spec.resources[j][k].device_properties.disk_address.adapter_type = this._getValue(this.current.variables[serviceName+'_'+k+'_device_bus']+'', typeof specs[i].create_spec.resources[j][k].device_properties.disk_address.adapter_type);
+
+                        // 								if(this.current.variables[serviceName+'_'+k+'_size'])
+                        // 									specs[i].create_spec.resources[j][k].disk_size_mib = this._getValue(this.current.variables[serviceName+'_'+k+'_size']+'', typeof specs[i].create_spec.resources[j][k].disk_size_mib);
+                        // 							}
+
+                        // 						}
+
+                    } else if (j == 'zone') {
+
+                        if (this.current.variables[serviceName + '_' + j])
+                            specs[i].create_spec.resources[j] = this._getValue(this.current.variables[serviceName + '_' + j] + '', typeof specs[i].create_spec.resources[j]);
+
+                    } else if (createSpec.resources[j] &amp;&amp; (createSpec.resources[j].constructor === Object || createSpec.resources[j].constructor === Array)) {
+                        continue;
+
+                    } else if (this.exclusionList.includes(j) || this.disabledFields.includes(j) || j == 'vm_name') {
+                        continue;
+
+                    } else {
+                        if (this.current.variables[serviceName + '_' + j])
+                            specs[i].create_spec.resources[j] = this._getValue(this.current.variables[serviceName + '_' + j] + '', typeof specs[i].create_spec.resources[j]);
+                    }
+                }
+            }
+            return specs;
+
+        } catch (e) {
+            this.logger.error("Nutanix_RequestUtil._fillSubstrateValue :- Exception caught while filling substrate variables value. Error :- " + e);
+        }
+    },
+
+    _fillServiceValue: function(status, specs) {
+
+        try {
+            this.logger.debug("Inside Nutanix_RequestUtil._fillServiceValue.");
+
+            for (var i in status) {
+                var serviceName = status[i].name.toLowerCase().replace(/ /g, '_');
+
+                var varList = status[i].variable_list;
+                for (var j in varList) {
+
+                    if (this.current.variables[serviceName + '_' + varList[j].name]) {
+                        if (varList[j].type + '' == 'SECRET' || varList[j].type + '' == 'HTTP_SECRET' || varList[j].type + '' == 'EXEC_SECRET') {
+                            specs[i].variable_list[j].attrs.is_secret_modified = true;
+                        }
+                        if (varList[j].data_type + '' &amp;&amp; varList[j].data_type + '' == 'LIST') {
+
+                            specs[i].variable_list[j].value = (this._getValue(this.current.variables[serviceName + '_' + varList[j].name].getDisplayValue().replace(/, /g, ",") + '', specs[i].variable_list[j].val_type)).replace(/\r/g, "");
+
+                        } else if (varList[j].type + '' == "LOCAL" &amp;&amp; varList[j].options &amp;&amp; varList[j].options.type + '' == "PREDEFINED" &amp;&amp; (varList[j].options.choices).length &lt;= 0 &amp;&amp; (varList[j].val_type + '' == 'DATE' || varList[j].val_type + '' == 'DATE_TIME')) {
+
+                            var newdtVal = this._formattedDateTimeNutanix(this.current.variables[serviceName + '_' + varList[j].name].getDisplayValue() + '', specs[i].variable_list[j].val_type);
+                            specs[i].variable_list[j].value = this._getValue(newdtVal + '', typeof newdtVal);
+
+                        } else {
+
+                            specs[i].variable_list[j].value = (this._getValue(this.current.variables[serviceName + '_' + varList[j].name] + '', specs[i].variable_list[j].val_type)).replace(/\r\n/g, '\n');
+
+                        }
+
+                    }
+                }
+            }
+            return specs;
+
+        } catch (e) {
+            this.logger.error("Nutanix_RequestUtil._fillServiceValue :- Exception caught while filling service vairables data. Error :- " + e);
+        }
+    },
+
+    _makeRelations: function(parsed) {
+
+        try {
+            this.logger.debug("Inside Nutanix_RequestUtil._makeRelations.");
+            var app_profile_list = parsed.app_profile_list;
+
+            for (var i = 0; i &lt; app_profile_list.length; i++) {
+                var appProfile = app_profile_list[i];
+                var deployment_create_list = appProfile.deployment_create_list;
+
+                for (var j = 0; j &lt; deployment_create_list.length; j++) {
+
+                    var deployemnt = deployment_create_list[j];
+                    this.sub_deploy_rel[deployemnt.substrate_local_reference.uuid] = {
+                        "name": deployemnt.substrate_local_reference.name,
+                        "deployemnt_uuid": deployemnt.uuid,
+                        "deployemnt_name": deployemnt.name,
+                        "profile_uuid": appProfile.uuid
+                    };
+
+
+                    var package_local_reference_list = deployemnt.package_local_reference_list;
+
+                    for (k = 0; k &lt; package_local_reference_list.length; k++) {
+                        var packge = package_local_reference_list[k];
+
+                        if (!this.deploy_pack_rel[deployemnt.uuid])
+                            this.deploy_pack_rel[deployemnt.uuid] = [];
+
+                        this.deploy_pack_rel[deployemnt.uuid].push({
+                            "name": deployemnt.name,
+                            "package_uuid": packge.uuid,
+                            "package_name": packge.name,
+                        });
+                    }
+
+                }
+            }
+
+
+            var packageList = parsed.package_definition_list;
+
+            for (var i = 0; i &lt; packageList.length; i++) {
+
+                var packge = packageList[i];
+                var uuid = packge.uuid;
+                var serviceList = packge.service_local_reference_list;
+
+                for (var j = 0; j &lt; serviceList.length; j++) {
+
+                    var service = serviceList[j];
+                    if (!this.pack_serv_rel[uuid])
+                        this.pack_serv_rel[uuid] = [];
+
+                    this.pack_serv_rel[uuid].push({
+                        "name": packge.name,
+                        "serv_name": service.name,
+                        "serv_uuid": service.uuid
+                    });
+                }
+            }
+        } catch (e) {
+            this.logger.error("Nutanix_RequestUtil._makeRelations:- Exception caught while making relation. Error :- " + e);
+        }
+
+    },
+
+    _formattedDateTimeNutanix: function(val, type) {
+
+        var dtVal = val + '';
+        var newdtVal;
+        dtVal = dtVal.split(' ');
+        var g = new GlideDateTime();
+        g.setValue(dtVal[0]);
+        var month = ((g.getMonthUTC() + '').length &lt; 2) ? '0' + g.getMonthUTC() : g.getMonthUTC();
+        var day = ((g.getDayOfMonthUTC() + '').length &lt; 2) ? '0' + g.getDayOfMonthUTC() : g.getDayOfMonthUTC();
+
+        if (type == 'DATE') {
+            newdtVal = day + '/' + month + '/' + g.getYearUTC();
+        } else {
+            var gtime1 = new GlideTime();
+            gtime1.setValue(dtVal[1]);
+            g.add(gtime1);
+
+            var hour = ((gtime1.getHourOfDayUTC() + '').length &lt; 2) ? '0' + gtime1.getHourOfDayUTC() : gtime1.getHourOfDayUTC();
+            var min = ((gtime1.getMinutesUTC() + '').length &lt; 2) ? '0' + gtime1.getMinutesUTC() : gtime1.getMinutesUTC();
+            var sec = ((gtime1.getSeconds() + '').length &lt; 2) ? '0' + gtime1.getSeconds() : gtime1.getSeconds();
+
+            newdtVal = day + '/' + month + '/' + g.getYearUTC() + ' - ' + hour + ":" + min + ":" + sec;
+        }
+        return newdtVal;
+    },
+
+    _getValue: function(val, type) {
+
+        if (type + '' == 'STRING' || type + '' == 'string')
+            return val + '';
+        else
+        if (type + '' == 'number')
+            return parseInt(val);
+        else
+        if (type + '' == 'boolean') {
+            if (val == 'true')
+                return true;
+            else
+            if (val == 'false')
+                return false;
+        }
+
+        return val;
+    },
+
+    type: 'Nutanix_RequestUtil'
+};]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;mumtaz.ansari&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-11-29 05:48:17&lt;/sys_created_on&gt;&lt;sys_id&gt;99b80fbd37022300d27b8cf6c3990efb&lt;/sys_id&gt;&lt;sys_mod_count&gt;158&lt;/sys_mod_count&gt;&lt;sys_name&gt;Nutanix_RequestUtil&lt;/sys_name&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;read&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_99b80fbd37022300d27b8cf6c3990efb&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-09-19 07:39:13&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1392155276</payload_hash>
+<remote_update_set display_value="Fix Null Check">a85b926c83b41e14655cc4b6feaad381</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-09-19 08:01:29</sys_created_on>
+<sys_id>205b926c83b41e14655cc4b6feaad382</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>19209388ab20000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-09-19 08:01:29</sys_updated_on>
+<table/>
+<target_name>Nutanix_RequestUtil</target_name>
+<type>Script Include</type>
+<update_domain>global</update_domain>
+<update_guid>da3692a4aaf01e14a1ae552b85a36832</update_guid>
+<update_guid_history>da3692a4aaf01e14a1ae552b85a36832:1392155276,34df5e05fd450210b355d84575395a53:937457937,15cf5a057e4502105f7dfe024744366c:-984886670,2cd1a2ba7cf88a100b3a2ab2e97dec17:522427666,506db4892c601110e7443750a6b895a1:1920033117,60ff7c427beda1103008757d1e927488:-1395854743,506db4892c601110e7443750a6b895a1:1920033117,7289b221266d61105235bbb579a8342b:-1395854743,506db4892c601110e7443750a6b895a1:1920033117,3e72dd8010e9e910803e86638bffa12d:-1395854743,506db4892c601110e7443750a6b895a1:1920033117,270d3481b8601110d244f669ff1c07d0:472503843,8b99f40518601110496fdf910c9e2b23:252580859,e706f841a5601110744efa612a58c1b3:1014096188,ae71fcc9b8201110a7c0e950cdf93e6b:1779060374,4785f77c0da011100dbefece1bd88a0c:-333459370,ff837f3c06a01110949cb77d5cde28a9:-670241019,a70377f8a7a011100b20eebb00d4132c:-1582845851,5d7cabb472a01110d905318dd46a24d5:-2008857391,b70f9bf4e0601110d15aecaf9e08aadb:-903056797,06bc57f4c560111077d36fe7a6bacbed:1910325906,c682e664a96c95108852485149bdc46b:840554903,41b12624fe6c95107671321f5d40ad1b:-462904253,cf2eda606b6c9510e1c3bb471962247b:1683675621,773b5a20d02c9510b7255829f77c1728:1726327352,8387c26cd5e895108c8e6d623796f86c:973769003,c8c94980c095a09016904c98ee544125:909872311,d6283c8c7315a090ae0b1013a5948b5f:1671936417,9c47344ca115a0908ed303a780f3eca3:1148495380,9b27f84c6a15a090cd83eb5bdc153808:-302670220,ac06b40c1715a090a2d2072072d1891d:1377700335,c6433888d415a090b1b5025b9c312c35:318333795,5a8aa0040015a090f11251f304d5d5c5:673483739,2009ac801d15a090a9361035129d40ba:-1854532509,44516c843ad1a090e540a85b5c2c1a9f:637778955,3aee94cc8491a090eef350c9acb91dad:-1541469756,ea79d488ab91a090997814c9cc68cce0:-1349788867,8fe59088c891a09043315dac75d59bd5:-1959754021,5f99118f84c5ec50dcbaeb6c2875020c:1140770057,6e39d58743c5ec501025a3cd3f9dc94a:1139938441,0e96c5471985ec50e93386b5c627a6d9:-1684479228,f97efc038085ec50fe3bf72282dba51b:630775010,8b12800b5ec1ec50422d142e5174c0ad:-413473327,679fb7765ac1ec504ceb7f9f4e361ea4:819420549,0a78a3b410c0a010bb1c82893c0b58a4:-1812277617,04cfee072873dc10483756a92d30da59:-488872953,2aeca6c3a133dc10c0fb75e4aba1aeba:-1691426687,769aea435733dc103e1d4453d197270b:-2081613981,a157264f6aff9c10313c81fa4216db9b:-2023738616,3be31a0307bf9c109ee49373f9d54c62:-62666641,c4ef21870ffb9c100ddf1d0076f206fd:-730169676,1c7e6d8f2dbb9c10089232a5f4bb52d1:165148585,49282d8fc6bb9c10d182710081cb4b55:-332078485,07a22dc7a57b9c10b2599568c4c37657:-1422674545,a167825bcc3b08104e0bf3362b967765:637807631,63873616a713041028b906afbaa26b2a:-53126073,058f2eda7fdfc0108d26230a81c3367a:-15629299,80370a46b013c010b904f5f24269311f:959277270,c5f5c6867f13c0105c13d7fbf6435558:-1459809958,d6540e06e9df80108c55ffdc7992a724:-2011301882,c8440a064613c01016af48072de5d3b0:-714206144,20c3824abbdf8010d3f6e808ab84f9d6:-1215120319,52d0fdce249f80102ef062838cab96ef:-851026276,b54be54a7a9f8010e56e3b0477ec6270:332177827,082b690a6b9f80104c36c36d447058b6:-678959269,760bed86f09f80108b679dbc3695e590:-1700460389,fd992502fe9f80103801593dadb221fb:-219721515,b37621ce4d5f8010ec54036df9627bf7:1224588623,870670baa211001002873b2019fa2168:-537181501,5bb9bd2832190810e9494816e0c41114:1323255798,69e8eda8efd50810f6accea72f2d268e:-507750720,4798ad6893d50810f6a521e09ef3d38a:1139577552,0439073e77cdc0105e631a81a715beec:463437016,d1d3f636a98dc0105851096c8dede4a1:-231264049,1c7cba6ebfc1c01010e4c5f1fb08ef99:-23376183,ebe2f6ee0681c010ef0d2f54a793a634:-1563495646,5d8ff7c80cbb3300414fbd0fd33d2aa8:968953996,e48d73c82ebb33008242c495f6285b89:-1784746111,812bb788a0bb330074a13700724d1655:-825789407,31cab788a1bb3300e24ddc781b6ba34e:600160556,3b8933487abb3300cf46565da4aca46e:29161580,33d8bb4c8c7b330079135787fe3a71de:-551808420,decbcf844933b3000346424ea14898ce:1820673985,70b7cf8cc0ff7300ccb63e11a958db06:-1018579340,779a724c35ff73000e6000c607a64d96:-569707585,c66932c85bff7300f82e9be3507eae36:-1196381055,e96162c054bf7300e336822f3fe0acbc:1174751134,9b2f9240d6bf7300af809174f9d927b7:-2103457113,84cb8e04767f73000043a604f48585dc:769017547,399a4a00887f7300e86c42cecc3f5c4b:-1377990933,bbce5637a9477700e00429a9663ca217:1080444183,1b39dc7f0ecf3700784401c4874998ce:187824359,18fd1bebd04f37001be3cf430d761d9f:-1752048643,767c9fab3ecb3700e41e4324a831f574:-924059476,6cc07f539c473700e7d108155f84ca09:128319861,977476538843370088ff172b9028200b:-864278758,1a4b6fda6a0373001a9d049fe37d8e3b:-124581098,d4d9ebdab60373008e64f07e29add777:589189155,3ea96f9ac20373002ff86c3ef40fee73:1951704111,67911f9aa18f3300b107d41582f8a5c7:1453820231,6b874b164c8f3300d7be794cd62d5b15:-2125612781,c1a64356ce8f3300d444eabbd1fa3e3c:-1550698529,f7a50716118f330001f79ca617d23134:1587784339,754387de3b4f330017cfbb8c3c51c837:1199525427,66a0475e444f3300a9a8bd36963bbfa6:1263041339,c9eebedafb4f3300acb71a3575f1fc72:2109108564,e6a47692cf4f33001b5c47025dea62c5:2104508657,7a6fa219e582b300773ad360f0f47227:955426953,ad1ec9cd15c27300ba9b267fbeeb84e6:532254034,51dd01450ac2730012ad0007bf0ec66e:-933182004,07c61fb1d7213300d9893426bfcce552:225112864,a800be555b6d7300f14a18a4cdeb65c8:49452486,399f6655b56d73009fb6350130c88a86:-79914508,936faa55cb6d7300db9111f026a42f01:-561432537,373fae15a46d73008600a84129836041:1353126046,aefe2255f16d7300a193a6a38663fd7b:2106697540,7cf82edddd2d73000306ba9f0e228589:2063534842,c687eaddc02d7300cf90113636a39b32:-846873265,85a846d9ece973001363e2834c1abc70:1875537465,4f511115e5297300cabb8896e47c40fb:1712295517,e9be83686b613300b9f621d9f3dcc1b6:-1554885763,da8aa18711913300dafbd448e5175fca:1022628135,062d5bb329c533006a44dc2bbae778f3:-395513899,3bea1fbfdd853300111c88cfe3188487:-1438981185,270a53bf5b853300978a7fdddbff1c1a:-905094757,44091f3f3a853300648270b136de057f:1627376403,60e41bbb89853300aa08a28295962dcc:-1141735246,339413bb4a8533009c20630ccbf6bbbf:-570292,e2b2dbf7f98533007e300a96e038d8a3:-332688474,14329737358533002ee3833345d4e439:2039241043,19cdc3371d8533008397e317f270ec3e:-354297461,a14acfbb404533002169c087a3d3be51:-1558249679,9e35fe3f4b05330087004bfb13e5149e:1318991146,5334fefb8405330045441a253dd2ede8:-1147630970,628f1af7c4c13300ecbe8163cffb40b6:1662129211,2a0186377e413300a4f6c82189ba2037:1401083437,46683dff9701330070203ca4657df596:1012963979,6708f5ff6601330026ef63d19ad1c54f:323786025,75a7fd3f83013300b5cd803a63f5bffc:61963817,8e0479fbd9013300ba7abeaf44db9367:-1370725903,be7271bbd5013300418a1d55586c5b8b:-1590245040,2a6283536cb07300bb81187df855f738:138620494,24a10fdfaa707300b1dcfa420e17a0f3:-80540937,f601839fba707300a3aec1c4d45021e2:355059834,d6dffa1f77707300715d540782efd1bf:1976339820,d20f7a1f27707300fa9628ddaaaf4a9f:1733828481,cefc6e53073073005c662085807a11cb:-1814177745,5c3c9693ee3073008520760865d781f3:1478869226,68f7d653233073003950a0b475e6bb2f:-1855445755,634f82dfd3fc330029701d0a3e750d86:19373511,b8b44e1bc3fc3300fe7c55f8a93fb2e6:1339607997,7e98a959b47c33001038b56ecb510889:-393100384,5238a15184bc33009baed544110c1799:-367803242,76a80b456e3833000531b65e57835d38:-204992527,f046ecd25f532300c04bf4b60b9dfc9d:-140438105,fa2beb37b30323001ec050027d2c2247:1633487970,16fb0550c15223000ed73fb9c64cc155:-725420091,36db09508a52230024c8a61c940b865a:-1957187259,cd68855c051223001f09bc8cf34c527c:-725420091,33c80affc40263004bd6794647e3a3dc:1594745523,d7066b32b10e230022533e020d1ca743:1467091764,46d0588a8c42a300e039997aaa0c19d1:1705671716,2d6a08065f42a300b1e5ccefaeab4c26:1432887994,7676cc826b42a300abbc64557f4a1890:-757080926,68154482f642a3009f9326ce31122ece:-1774439161,1c1bf73dabc2230008fcb4e582aa9d51:570741894,f3aafff957c22300a5bc76b10ef74676:-1540640015,b448bb7923c22300fb5e8c8c5025ad67:954728334,c6b63f3971c223004a0638d90e86072a:-1613735073,fa36fb3965c223005b8eb50fa2707706:-1798848525,06d5bbf54bc2230051cbb47151850cad:-2074535242,3fb57739b9c2230086c75bfefcb96016:956584800,70fe0fb177422300f29ab3c7214dbfb3:907650355,fdddcbbd7a022300b047b050df879fd0:-48898052,27eb4f314b422300e59a13c8d245be42:-494645910,6dc8cbbd640223007af7efd1eac19d9a:523166658</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
