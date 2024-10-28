@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2024-10-25 13:18:31">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<application_name>NCM Self-Service</application_name>
+<application_scope>x_nuta2_nutanix_ca</application_scope>
+<application_version>1.6.4</application_version>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>Updated Action names for custom buttons to avoid visibility of Both OOB And Custom</description>
+<inserted/>
+<name>Custom Button Fix</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>fa8dc810c3e5925026419b377d0131e5</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>c31d3898c329925026419b377d013189</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_4a4db00e37c2a300fdfc097973990e23</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_deactivate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.sys_class_name == 'x_nuta2_nutanix_ca_nutanix_marketplaceitems'&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;destructive&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Deactivate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[gs.addInfoMessage('Security does not allow the execution of that action against the specified record.');]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;girishgyani&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-11-29 14:17:19&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;4a4db00e37c2a300fdfc097973990e23&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;Deactivate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;protected&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_4a4db00e37c2a300fdfc097973990e23&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:54:24&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_marketplaceitems&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;4a4db00e37c2a300fdfc097973990e23&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-11 06:30:49&lt;/sys_created_on&gt;&lt;sys_id&gt;8389d76383c9de10d215f9a6feaad32a&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-11 06:30:49&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1479933500</payload_hash>
+<remote_update_set display_value="Custom Button Fix">c31d3898c329925026419b377d013189</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>031d3898c329925026419b377d01318a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c3193f0d0000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<table>x_nuta2_nutanix_ca_nutanix_marketplaceitems</table>
+<target_name>Deactivate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>a16e045097e592507f87a1d1e52864f3</update_guid>
+<update_guid_history>a16e045097e592507f87a1d1e52864f3:1479933500,ef5e045042e59250d8906d64b8ad2b97:1187057705,ddb597fdfe191e10f457f46cb448c49f:-1354891366,5389d7e300c9de10baea36a06e0043ca:-1354891366,ab3b1d43cdfbc41090dbbdbb2a335b02:785350586,c7bfb802f8eda11035476d56a143d0e2:-122926763,ab3b1d43cdfbc41090dbbdbb2a335b02:785350586,51b93e61c16d61109485345abadfbc29:-122926763,ab3b1d43cdfbc41090dbbdbb2a335b02:785350586,de12910038e9e910cbb7d8f925005d0c:-122926763,ab3b1d43cdfbc41090dbbdbb2a335b02:785350586,fd87e45a1ccaa300870290f0e0fb414f:-508646754,9bbd304ee2c2a3001f8e1468ad5b844f:108851628,4e4db00ecec2a3007a8dabeccfcb8524:-1558972096</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_f2fcb80e37c2a300fdfc097973990e11</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_deactivate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.sys_class_name == 'x_nuta2_nutanix_ca_nutanix_blueprint'&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;destructive&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Deactivate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[gs.addInfoMessage('Security does not allow the execution of that action against the specified record.');]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;girishgyani&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-11-29 14:16:00&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;f2fcb80e37c2a300fdfc097973990e11&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;Deactivate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;protected&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_f2fcb80e37c2a300fdfc097973990e11&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:53:24&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_blueprint&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;f2fcb80e37c2a300fdfc097973990e11&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-25 09:53:23&lt;/sys_created_on&gt;&lt;sys_id&gt;622e0450c3e5925026419b377d0131ee&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:53:23&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>726911661</payload_hash>
+<remote_update_set display_value="Custom Button Fix">c31d3898c329925026419b377d013189</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>0b1d349cc3a9925026419b377d013153</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c31853160000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<table>x_nuta2_nutanix_ca_nutanix_blueprint</table>
+<target_name>Deactivate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>be2e4c1063e59250661824e72848bac1</update_guid>
+<update_guid_history>be2e4c1063e59250661824e72848bac1:726911661,3d2b6f0c92a19250e2a73deda9ede3f6:1096635101,91b597fdc3191e10a07142d3f52a40c0:2117904208,6cc61b6f5749de1037b04ff54836f962:2117904208,c757241addcaa3006217d0a6f01e5e7c:-848252386,7610898294eda110fa81afd04cc92f38:-1379396559,c757241addcaa3006217d0a6f01e5e7c:-848252386,f1b97e61436d611032640661039b9d8c:-1379396559,c757241addcaa3006217d0a6f01e5e7c:-848252386,82a295043fe9e910915fd33a542791c2:-1379396559,c757241addcaa3006217d0a6f01e5e7c:-848252386,b5bd304ea1c2a30037c0b1b9301c30a8:382323408,f6fcb80e35c2a30006900d44c7eae712:-199115668</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_4926e020db1e2300570c9b81ca961994</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_deactivate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.sys_class_name=='x_nuta2_nutanix_ca_nutanix_blueprint'&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;destructive&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Deactivate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[gs.addErrorMessage('This action is not available for Nutanix Calm App.');
+]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-12-07 07:03:19&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;4926e020db1e2300570c9b81ca961994&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;Deactivate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;protected&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_4926e020db1e2300570c9b81ca961994&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:53:26&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_blueprint&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;4926e020db1e2300570c9b81ca961994&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-11 06:17:21&lt;/sys_created_on&gt;&lt;sys_id&gt;e97657ab8349de10d215f9a6feaad345&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-11 06:17:21&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>115502618</payload_hash>
+<remote_update_set display_value="Custom Button Fix">c31d3898c329925026419b377d013189</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>4f1d3898c329925026419b377d013189</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c3185d850000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<table>x_nuta2_nutanix_ca_nutanix_blueprint</table>
+<target_name>Deactivate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>9b2ec89c1fa59250b1f8672da5a38bee</update_guid>
+<update_guid_history>9b2ec89c1fa59250b1f8672da5a38bee:115502618,e83be30077259250d3c447eb94d243e7:-2144023360,19b597fda3191e105113116a8ebe2d9e:-666238983,f1765ba37f49de1046e770231f058647:-666238983,805431f5f7522300fa626f540cdb604c:971890408,0fbfb80232eda11074b4ef9f66e35cd0:2110776852,805431f5f7522300fa626f540cdb604c:971890408,11b93e61866d611080823da726037e15:2110776852,805431f5f7522300fa626f540cdb604c:971890408,da12510035e9e9106c6f843eba9f8799:2110776852,805431f5f7522300fa626f540cdb604c:971890408,92176cecc8da2300a76b0a24f2fc6fae:-1985798646,a6a624600d1e230082845e1eedcb9e86:-763981950</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_c09dfc0e37c2a300fdfc097973990e89</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_activate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.sys_class_name == 'x_nuta2_nutanix_ca_nutanix_blueprint'&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;primary&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Activate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[gs.addInfoMessage('Security does not allow the execution of that action against the specified record.');]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;girishgyani&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-11-29 14:18:32&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;c09dfc0e37c2a300fdfc097973990e89&lt;/sys_id&gt;&lt;sys_mod_count&gt;7&lt;/sys_mod_count&gt;&lt;sys_name&gt;Activate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;protected&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_c09dfc0e37c2a300fdfc097973990e89&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:52:17&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_blueprint&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;c09dfc0e37c2a300fdfc097973990e89&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-17 12:58:18&lt;/sys_created_on&gt;&lt;sys_id&gt;91cb67e1c3d5561026419b377d0131d9&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-17 12:58:18&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>464082563</payload_hash>
+<remote_update_set display_value="Custom Button Fix">c31d3898c329925026419b377d013189</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>871d3898c329925026419b377d01318a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c3174ed50000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<table>x_nuta2_nutanix_ca_nutanix_blueprint</table>
+<target_name>Activate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>22ed4c9c67a59250d3fa0b21839447e4</update_guid>
+<update_guid_history>22ed4c9c67a59250d3fa0b21839447e4:464082563,f1ca6700e12592507d55e810e2236c8b:-910090265,4dbaa74c99a192505074cfdac6fb0bf1:-1687707132,9db597fd7a191e100f47af02f9951ea2:-179206332,d9e0dbb547951e10a7bafaa0c25b1e33:-179206332,6a7ac7798a151e10ff1ddca028f245b7:-1644935258,fc6a03351d151e106b24b5be4da6d49f:-758063578,1c0a0fb5f4d11e10839fb3f6d0db91cf:1296189864,45169367d949de1069d0c85f6fe18fb3:-179206332,f5e55ba34949de10ac4811de935a5b41:-1687707132,2dc51f275d49de109b1dc7037a12b2e2:-910090265,575967179e859a104ff5e8c87bbb739e:-1349754122,a7762bdf3e059a100dc7e80ccfa87d5f:2136087333,d9366fdbb7059a10f64330b5cf57905d:790249534,18f5a3dbe2059a109cc06734bc4bff4f:678753231,98d5a39b8b059a10c5114294dcd8c3b6:-475940190,b0d7d3bdd9599610199439d95b66a97d:-910090265,e1cb2ba11dd55610a7fcd9ec65ff60f5:1731479736,489b5183a4fbc41001dcb1848ce524fc:882120190,440041829eeda11090685c00bcb4d9e6:1157292755,489b5183a4fbc41001dcb1848ce524fc:882120190,fdb97e61936d6110d2282cc7655d5709:1157292755,489b5183a4fbc41001dcb1848ce524fc:882120190,028295c0c2e9e910d682ffe7144981ba:1157292755,489b5183a4fbc41001dcb1848ce524fc:882120190,1086281af0caa300d5554c418fe18503:78870334,b916641a55caa3005b9feda171d7db06:972577420,2dd5a01a48caa3006cb8f6c23f3bb6a4:-419853328,9fb56cd698caa3002c9125cc69610c1b:1323590200,29cdb44e87c2a300f7c34d3796bd0073:-419853328,c49dfc0e3cc2a3002e1a59321e76b88a:-1557463284</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_241b5d94db5623000462fe1b689619bd</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_activate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.sys_class_name=='x_nuta2_nutanix_ca_nutanix_catalog_items'&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style/&gt;&lt;messages/&gt;&lt;name&gt;Activate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[gs.addErrorMessage('This action is not available for the Nutanix Scoped App.');]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;girishgyani&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-12-06 16:15:14&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;241b5d94db5623000462fe1b689619bd&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Activate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;protected&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_241b5d94db5623000462fe1b689619bd&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:56:28&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_catalog_items&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;241b5d94db5623000462fe1b689619bd&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-11 06:36:00&lt;/sys_created_on&gt;&lt;sys_id&gt;beba93a383c9de10d215f9a6feaad3ef&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-11 06:36:00&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-265865063</payload_hash>
+<remote_update_set display_value="Custom Button Fix">c31d3898c329925026419b377d013189</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>8b1d3898c329925026419b377d013189</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c31b23110000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<table>x_nuta2_nutanix_ca_nutanix_catalog_items</table>
+<target_name>Activate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>bfde489045e59250fccd98b0fa2299ec</update_guid>
+<update_guid_history>bfde489045e59250fccd98b0fa2299ec:-265865063,f6ce4c50f1e59250d8bfede43914997f:1924799972,51b597fd9d191e10d0287a23018a209d:-1842405101,2dca9f632bc9de100adc6ab9ff8dcdf1:-1842405101,c3ba93e3eec9de1093a445e5c6bf7891:2108077556,ed6b5994a15623006c6d48a14f8496f2:-632518974,99af70025beda11062c0ea1f693562ec:-138141000,ed6b5994a15623006c6d48a14f8496f2:-632518974,91b9fa61e56d6110d887d5f6663786e4:-138141000,ed6b5994a15623006c6d48a14f8496f2:-632518974,73f191ccf5a9e910ead1f33ccc221b5d:-138141000,ed6b5994a15623006c6d48a14f8496f2:-632518974</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_4e9cb00e37c2a300fdfc097973990e19</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_activate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.sys_class_name == 'x_nuta2_nutanix_ca_nutanix_marketplaceitems'&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;primary&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Activate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[gs.addInfoMessage('Security does not allow the execution of that action against the specified record.');]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;girishgyani&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-11-29 14:15:11&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;4e9cb00e37c2a300fdfc097973990e19&lt;/sys_id&gt;&lt;sys_mod_count&gt;5&lt;/sys_mod_count&gt;&lt;sys_name&gt;Activate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;protected&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_4e9cb00e37c2a300fdfc097973990e19&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:55:08&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_marketplaceitems&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;4e9cb00e37c2a300fdfc097973990e19&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-11 06:30:31&lt;/sys_created_on&gt;&lt;sys_id&gt;6e799b6b8349de10d215f9a6feaad3b4&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-11 06:30:31&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-729119648</payload_hash>
+<remote_update_set display_value="Custom Button Fix">c31d3898c329925026419b377d013189</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>c31d3898c329925026419b377d01318a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c319ea3b0000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<table>x_nuta2_nutanix_ca_nutanix_marketplaceitems</table>
+<target_name>Activate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>549e4c50fae59250ed548ba4cad70726</update_guid>
+<update_guid_history>549e4c50fae59250ed548ba4cad70726:-729119648,c27e8c50f7e5925072ac6607144d5602:318720457,d5b597fdf1191e101d09dff7af5f84a1:858459809,2e79df2b1d49de10ac8156227890787d:858459809,316b9d4386fbc410fbd43d4f07390bae:1281678042,abbff80288eda110343323e16a5bc073:2057255157,316b9d4386fbc410fbd43d4f07390bae:1281678042,59b93e61f96d6110adab0ce01eb8e53a:2057255157,316b9d4386fbc410fbd43d4f07390bae:1281678042,8312d10083e9e910a62bdc4d06be9ba2:2057255157,316b9d4386fbc410fbd43d4f07390bae:1281678042,12772c1afacaa300c17afed375c3e17d:1347062142,7ecd344ef7c2a300f9740b554478ec8c:-591113076,7b3d780eb4c2a300461fee5772d995e3:954052256,76cc700e6ac2a300a8946ece7b2a85d5:-1557463284</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="NCM Self-Service">3b7631654f452b001200e5201310c76b</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_066c1118db5623000462fe1b68961960</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_deactivate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.sys_class_name=='x_nuta2_nutanix_ca_nutanix_catalog_items'&lt;/condition&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;destructive&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Deactivate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[gs.addErrorMessage('This action is not available for the Nutanix Scoped App.');]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;girishgyani&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2018-12-06 16:19:38&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;066c1118db5623000462fe1b68961960&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;Deactivate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="NCM Self-Service" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy&gt;protected&lt;/sys_policy&gt;&lt;sys_scope display_value="NCM Self-Service"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_066c1118db5623000462fe1b68961960&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-25 09:56:39&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_catalog_items&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;066c1118db5623000462fe1b68961960&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-11 06:36:27&lt;/sys_created_on&gt;&lt;sys_id&gt;e9da57eb83c9de10d215f9a6feaad3d0&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-11 06:36:27&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>178789807</payload_hash>
+<remote_update_set display_value="Custom Button Fix">c31d3898c329925026419b377d013189</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:30</sys_created_on>
+<sys_id>c71d3898c329925026419b377d013189</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c31b4d100000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:30</sys_updated_on>
+<table>x_nuta2_nutanix_ca_nutanix_catalog_items</table>
+<target_name>Deactivate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>9eee8c90eee59250f555bff0fb44bd22</update_guid>
+<update_guid_history>9eee8c90eee59250f555bff0fb44bd22:178789807,cddec8907de592500be74d62a15098e4:858146994,d5b597fd52191e1046583b0158ce149b:-1751656809,b5da93eba0c9de10e20d00e5d90ea850:-1751656809,65ea114380fbc41015ff8d973970a6ab:-479365603,049ff8ced5ada11035e861a8398f40a7:256305978,65ea114380fbc41015ff8d973970a6ab:-479365603,cdb9fa617f6d61105c18a133211b4c75:256305978,65ea114380fbc41015ff8d973970a6ab:-479365603,32e1198c82a9e910e0d8a29f21c2c6d3:256305978,65ea114380fbc41015ff8d973970a6ab:-479365603,c66c11183b5623004c91d5ad0c84ba61:-1268979144</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
