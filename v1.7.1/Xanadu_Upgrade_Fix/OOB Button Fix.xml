@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2024-10-25 13:18:13">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>select the 'Activate' or 'Deactivate' UI Actions in the sc_cat_item table without selecting a record, you are prompted with the error message</description>
+<inserted/>
+<name>OOB Button Fix</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>21815494c3e5925026419b377d0131ae</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:12</sys_created_on>
+<sys_id>ba0d7498c3e5925026419b377d013146</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:12</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_e1360724c0a8016500a71c9ad215a6e1</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_activate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2/&gt;&lt;comments/&gt;&lt;condition/&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;primary&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Activate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[current.active = true;
+current.update();]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2008-03-07 16:37:10&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;e1360724c0a8016500a71c9ad215a6e1&lt;/sys_id&gt;&lt;sys_mod_count&gt;10&lt;/sys_mod_count&gt;&lt;sys_name&gt;Activate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;b93a5e8f659012104f340572a947400e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_e1360724c0a8016500a71c9ad215a6e1&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-05-15 16:53:08&lt;/sys_updated_on&gt;&lt;table&gt;sc_cat_item&lt;/table&gt;&lt;ui11_compatible&gt;false&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;true&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;e1360724c0a8016500a71c9ad215a6e1&lt;/id&gt;&lt;sys_created_by&gt;users.midserver&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-10-10 07:52:13&lt;/sys_created_on&gt;&lt;sys_id&gt;5d926a9bc34d9a1026419b377d013155&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;users.midserver&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-10-10 07:52:13&lt;/sys_updated_on&gt;&lt;table&gt;sys_ui_action&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1461526054</payload_hash>
+<remote_update_set display_value="OOB Button Fix">ba0d7498c3e5925026419b377d013146</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:12</sys_created_on>
+<sys_id>720d7498c3e5925026419b377d013147</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c327a2e10000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:12</sys_updated_on>
+<table>sc_cat_item</table>
+<target_name>Activate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>7bf110d4b8e5925086a920096346b3fe</update_guid>
+<update_guid_history>7bf110d4b8e5925086a920096346b3fe:-1461526054,a38c5fc4cf6192502bb545c682af52cf:-1697319996,a57c970c93ad5250105e5d1453740cc5:862702036,da05a6178ec1da10b64d60e1006b02b7:-146855140,f8b3221341c1da102c63cd36a5ed0b55:862702036,73932213a4c1da1006c13521d0614e05:-977821440,5b83229f3981da10a7a69a403ebe9494:-763418392,e733e6dff381da105625062ee899a61f:885271484,ece2e6dfc281da10db6e9a5a0f1a9c2f:1543734729,699222df0e81da1042ddc42f761b71b9:1673913772,a992ea5f6a81da10424afaad52d963b9:-302464322</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_e133ed24c0a801650089ca515de6ae6a</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;sc_cat_item_deactivate&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2/&gt;&lt;comments/&gt;&lt;condition/&gt;&lt;form_action&gt;false&lt;/form_action&gt;&lt;form_button&gt;false&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;true&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;true&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style&gt;destructive&lt;/list_style&gt;&lt;messages/&gt;&lt;name&gt;Deactivate&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;100&lt;/order&gt;&lt;script&gt;&lt;![CDATA[current.active = false;
+current.update();]]&gt;&lt;/script&gt;&lt;show_insert&gt;true&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2008-03-07 16:37:10&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;e133ed24c0a801650089ca515de6ae6a&lt;/sys_id&gt;&lt;sys_mod_count&gt;10&lt;/sys_mod_count&gt;&lt;sys_name&gt;Deactivate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;b93a5e8f659012104f340572a947400e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_e133ed24c0a801650089ca515de6ae6a&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-05-15 16:50:10&lt;/sys_updated_on&gt;&lt;table&gt;sc_cat_item&lt;/table&gt;&lt;ui11_compatible&gt;false&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;true&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-378086265</payload_hash>
+<remote_update_set display_value="OOB Button Fix">ba0d7498c3e5925026419b377d013146</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>users.midserver</sys_created_by>
+<sys_created_on>2024-10-25 13:18:12</sys_created_on>
+<sys_id>be0d7498c3e5925026419b377d013146</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>192c327a2b70000001</sys_recorded_at>
+<sys_updated_by>users.midserver</sys_updated_by>
+<sys_updated_on>2024-10-25 13:18:12</sys_updated_on>
+<table>sc_cat_item</table>
+<target_name>Deactivate</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>3ff110d40ce592508a6e94e0e01aabfb</update_guid>
+<update_guid_history>3ff110d40ce592508a6e94e0e01aabfb:-378086265,db9c534c0fa19250cf7dc0fd19afd048:369355070,979c534cfba192500dabd33813c72347:-875924659</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
